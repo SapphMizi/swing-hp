@@ -1,204 +1,146 @@
-Welcome to your new TanStack Start app! 
+# 大阪大学 軽音楽部 SWING 公式サイト
 
-# Getting Started
+大阪大学軽音楽部SWINGの公式ウェブサイトのソースコードです。
 
-To run this application:
+---
 
-```bash
+## はじめに読んでください
+
+このページは、サイトを**編集・更新したい部員向け**の説明書です。  
+プログラミングをやったことがなくても、手順通りに進めれば動かせるように書いています。  
+わからないことがあれば、管理者（サイト担当の部員）に聞いてください。
+
+---
+
+## サイトを自分のパソコンで動かすまでの手順
+
+### ステップ 1：必要なソフトをインストールする
+
+2つのソフトが必要です。すでに入っている場合はスキップしてください。
+
+**① Node.js**（サイトを動かすエンジンです）  
+→ https://nodejs.org/ja/ にアクセスして「推奨版」をダウンロード・インストール
+
+**② Git**（ファイルの履歴管理ツールです）  
+→ https://git-scm.com/ にアクセスしてダウンロード・インストール
+
+---
+
+### ステップ 2：このプロジェクトをダウンロードする
+
+ターミナル（Macなら「ターミナル」、Windowsなら「コマンドプロンプト」）を開いて、以下を入力してください。
+
+```
+git clone https://github.com/SapphMizi/swing-hp.git
+cd swing-hp
+```
+
+> **ターミナルって何？**  
+> 文字を打ってパソコンに命令するツールです。Macはスポットライト検索で「ターミナル」と検索すると出てきます。
+
+---
+
+### ステップ 3：必要なファイルを準備する
+
+以下のコマンドを入力してください（時間がかかる場合があります）。
+
+```
 npm install
+```
+
+> これは「このサイトに必要な部品を全部ダウンロードする」という命令です。
+
+---
+
+### ステップ 4：サイトを起動する
+
+```
 npm run dev
 ```
 
-# Building For Production
+このコマンドを実行したあと、ブラウザで **http://localhost:3000** を開くとサイトが表示されます。
 
-To build this application for production:
+> `localhost` とは「自分のパソコンの中だけで動いているサイト」のことです。インターネットには公開されていないので安心して触れます。
 
-```bash
-npm run build
+---
+
+## コンテンツの更新方法
+
+サイトの文章や情報を変えたいときは、以下のファイルを編集します。  
+**Visual Studio Code**（無料のテキストエディタ）を使うと編集しやすいです。
+
+### よく更新するもの
+
+| 更新したい内容 | 編集するファイル |
+|---|---|
+| 日本語のテキスト全般 | `src/i18n/ja.ts` |
+| 英語のテキスト全般 | `src/i18n/en.ts` |
+| ライブレポートの追加 | `src/routes/live-reports.tsx` |
+| スケジュールの内容 | `src/routes/schedule.tsx` |
+| 各バンドのSNSリンク・メール | `src/routes/contact.tsx` |
+| ヒーロー（トップの大きな画像） | `public/images/` に `hero-1.jpg` 〜 `hero-3.jpg` を入れる |
+
+---
+
+### SNSリンクを本物のURLに変える
+
+`src/routes/contact.tsx` を開いて、`https://www.instagram.com/` と `https://x.com/` になっている部分を実際のURLに書き換えてください。
+
+また、同じファイルの `SWING_EMAIL` という部分も実際のメールアドレスに変更してください。
+
+---
+
+### ヒーロー画像を追加する
+
+トップページの大きな背景画像を設定するには、以下のファイル名で `public/images/` フォルダに画像を入れてください。
+
+- `hero-1.jpg` — 1枚目の画像
+- `hero-2.jpg` — 2枚目の画像
+- `hero-3.jpg` — 3枚目の画像
+
+横長（16:9）の写真が綺麗に表示されます。
+
+---
+
+## 変更をGitHubに保存する（公開・バックアップ）
+
+ファイルを編集したら、以下の手順で保存・反映します。
+
+```
+git add .
+git commit -m "変更内容の説明（例：SNSリンクを更新した）"
+git push
 ```
 
-## Testing
+> **なぜこれが必要？**  
+> ファイルを編集しただけではGitHubには反映されません。`git push` をすることで、インターネット上のGitHubに変更が保存されます。Vercelと連携していれば、その後自動でサイトに公開されます。
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+---
 
-```bash
-npm run test
+## ファイル構成（参考）
+
+```
+swing-hp/
+├── public/
+│   └── images/           ← 画像ファイルを入れる場所
+├── src/
+│   ├── routes/           ← 各ページの内容
+│   │   ├── index.tsx     ← トップページ
+│   │   ├── about.tsx     ← 部について
+│   │   ├── history.tsx   ← 歴史
+│   │   ├── schedule.tsx  ← スケジュール
+│   │   ├── live-reports.tsx ← ライブレポート
+│   │   └── contact.tsx   ← コンタクト
+│   └── i18n/
+│       ├── ja.ts         ← 日本語テキスト
+│       └── en.ts         ← 英語テキスト
+└── _reference/           ← 移行前の旧HTMLサンプル（参考用）
 ```
 
-## Styling
+---
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+## 困ったときは
 
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
-
-## Linting & Formatting
-
-
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
-
-```bash
-npm run lint
-npm run format
-npm run check
-```
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+- **サイトが表示されない** → `npm install` をもう一度試してみてください
+- **コマンドがエラーになる** → Node.js のバージョンが古い可能性があります。公式サイトから最新版をインストールしてください
+- **それでも解決しない** → サイト担当の部員に連絡してください
