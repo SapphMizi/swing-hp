@@ -1,0 +1,50 @@
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>History - SWING</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+</head>
+<body>
+<!-- header -->
+<header class="site-header">
+<div class="lang-wrap"><button id="langToggle" class="lang-toggle">日本語 / EN</button></div>
+<div class="brand"><a href="index.html">SWING <span class="sub">Osaka University Jazz Club</span></a></div>
+<nav class="main-nav" id="mainNav"><ul class="nav-list"><li><a href="index.html" data-key="home">Home</a></li><li><a href="about.html" data-key="about">About Us</a></li><li><a href="history.html" data-key="history">History</a></li><li><a href="schedule.html" data-key="schedule">Schedule</a></li><li><a href="livereports.html" data-key="livereports">Live Reports</a></li><li><a href="contacts.html" data-key="contact">Contact</a></li><li><a href="for-obog.html" data-key="forobog">for OBOG</a></li></ul></nav>
+<button id="hamburger" class="hamburger">≡</button>
+</header>
+
+
+<main class="page-content"><div class="container"> <h1 
+    data-ja="スケジュール" data-en="Schedule">Schedule
+</h1><p data-ja="各バンドのライブスケジュールについて記載しております。" data-en="You can check our live information."></p></div></main>
+
+
+<footer class="site-footer"><div class="container"><small>© <span id="year4"></span> 大阪大学 軽音楽部 SWING</small></div></footer>
+<script src="scripts/main.js"></script>
+</body>
+<div class="schedule-container">
+  <!-- タブ部分 -->
+  <div class="tabs">
+    <button class="tab" data-month="11">11月</button>
+    <button class="tab" data-month="12">12月</button>
+    <button class="tab" data-month="1">1月</button>
+  </div>
+
+  <!-- 各月の予定表示 -->
+  <div class="tab-content" id="month-11">
+    <p>11/1 ミーティング</p>
+    <p>11/5 イベント</p>
+  </div>
+  <div class="tab-content" id="month-12">
+    <p>12/3 練習</p>
+    <p>12/10 イベント</p>
+  </div>
+  <div class="tab-content" id="month-1">
+    <p>1/7 新年会</p>
+  </div>
+</div>
+
+
+</html>

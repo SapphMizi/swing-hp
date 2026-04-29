@@ -1,0 +1,128 @@
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>History - SWING</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+</head>
+<body>
+<!-- header -->
+<header class="site-header">
+<div class="lang-wrap"><button id="langToggle" class="lang-toggle">日本語 / EN</button></div>
+<div class="brand"><a href="index.html">SWING <span class="sub">Osaka University Jazz Club</span></a></div>
+<nav class="main-nav" id="mainNav"><ul class="nav-list"><li><a href="index.html" data-key="home">Home</a></li><li><a href="about.html" data-key="about">About Us</a></li><li><a href="history.html" data-key="history">History</a></li><li><a href="schedule.html" data-key="schedule">Schedule</a></li><li><a href="livereports.html" data-key="livereports">Live Reports</a></li><li><a href="contacts.html" data-key="Contact">Contact</a></li><li><a href="for-obog.html" data-key="forobog">for OBOG</a></li></ul></nav>
+<button id="hamburger" class="hamburger">≡</button>
+</header>
+
+
+<main class="page-content">
+  <div class="container">
+
+    <h1 data-ja="ライブレポート" data-en="Live Reports">
+      ライブレポート
+    </h1>　<p data-ja="Swing Arcade Orchestra、The New Wave Jazz Orchestraの過去のライブについては、abemaブログにてご確認ください。" data-en="You can check our live information in abema.">
+
+
+    <!-- ===== 年代タブ ===== -->
+    <div class="year-tabs">
+      <button class="year-tab active" data-year="2024">2024</button>
+      <section class="report-year active" data-year="2024">
+      <button class="year-tab" data-year="2023">2023</button>
+      <section class="report-year active" data-year="2023">
+    </div>
+
+    <!-- ===== 2024 ===== -->
+    <section class="report-year active" data-year="2024">
+      <div class="report-grid">
+
+        <a href="report-202406.html" class="report-card">
+          <img src="images/live1.jpg" alt="">
+          <div class="report-body">
+            <time>2024.06.15</time>
+            <h3>2024年6月 定期ライブ</h3>
+            <p>学内ホールで開催した定期ライブ。</p>
+          </div>
+        </a>
+
+        <a href="report-202404.html" class="report-card">
+          <img src="images/live2.jpg" alt="">
+          <div class="report-body">
+            <time>2024.04.10</time>
+            <h3>新歓ライブ 2024</h3>
+            <p>新入生向けライブイベント。</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ===== 2023 ===== -->
+    <section class="report-year" data-year="2023">
+      <div class="report-grid">
+
+        <a href="report-202312.html" class="report-card">
+          <img src="images/live3.jpg" alt="">
+          <div class="report-body">
+            <time>2023.12.20</time>
+            <h3>クリスマスライブ 2023</h3>
+            <p>年内最後のライブ。</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </div>
+</main>
+
+
+
+
+    <div class="report-grid">
+
+      <!-- カード1 -->
+      <a href="2024-06-regular.html" class="report-card">
+        <img src="images/live_2024_06.jpg" alt="2024年6月 定期ライブ">
+        <div class="report-body">
+          <time datetime="2024-06-15">2024.06.15</time>
+          <h2
+            data-ja="2024年6月 定期ライブ"
+            data-en="June 2024 Regular Live">
+            2024年6月 定期ライブ
+          </h2>
+          <p
+            data-ja="学内ホールで行われた定期ライブのレポートです。"
+            data-en="A report from our regular live performance on campus.">
+            学内ホールで行われた定期ライブのレポートです。
+          </p>
+        </div>
+      </a>
+
+      <!-- カード2 -->
+      <a href="2024-04-regular.html" class="report-card">
+        <img src="images/live_2024_04.jpg" alt="2024年4月 新歓ライブ">
+        <div class="report-body">
+          <time datetime="2024-04-10">2024.04.10</time>
+          <h2
+            data-ja="2024年4月 新歓ライブ"
+            data-en="April 2024 Welcome Live">
+            2024年4月 新歓ライブ
+          </h2>
+          <p
+            data-ja="新入生歓迎ライブの様子をお届けします。"
+            data-en="Highlights from our welcome live for new students.">
+            新入生歓迎ライブの様子をお届けします。
+          </p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</main>
+
+
+<footer class="site-footer"><div class="container"><small>© <span id="year5"></span> 大阪大学 軽音楽部 SWING</small></div></footer>
+<script src="script.js"></script>
+</body>
+</html>
