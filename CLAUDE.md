@@ -2,6 +2,18 @@
 
 このファイルは、リポジトリで作業する Claude Code (claude.ai/code) に向けたガイダンスです。
 
+## Git ワークフロー（必須）
+
+**`main` ブランチへの直接 push は禁止。** 必ずブランチを切ってから作業すること。
+
+```bash
+git checkout -b ブランチ名   # 作業開始前に必ず実行
+# 例: git checkout -b feature/hero-images
+#     git checkout -b fix/contact-email
+```
+
+作業完了後は GitHub 上でプルリクエストを作成する。`git push origin ブランチ名` で push し、PR を通じて `main` にマージする。
+
 ## プロジェクト概要
 
 **大阪大学 軽音楽部 SWING** の公式ウェブサイト。部内には D軍、Swing Arcade Orchestra (SAO)、The New Wave Jazz Orchestra (TNWJO) の3つのビッグバンドがある。
