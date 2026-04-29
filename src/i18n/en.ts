@@ -31,7 +31,7 @@ export const en = {
         'SWING is an authorized club at Osaka University, based in "Meidokan" on Toyonaka Campus. We perform jazz in various styles, from big bands to small combos.',
       bandsTitle: 'Our Bands',
       joinTitle: 'Join Us',
-      joinText: "No prior experience required. If you love jazz, that's all you need.",
+      joinText: 'No prior experience required. Feel free to reach out to us anytime.',
       joinCta: 'Contact Us',
     },
 
@@ -39,15 +39,15 @@ export const en = {
     bands: {
       dgun: {
         name: 'D-gun',
-        desc: 'The origin of our big band tradition. The core of SWING where tradition meets innovation.',
+        desc: 'The big band that all new members join. Learn jazz step by step with guidance from senior members.',
       },
       sao: {
         name: 'Swing Arcade Orchestra',
-        desc: 'Pop, anime, and game music reimagined through big band arrangements.',
+        desc: 'A band that takes on all genres, centered on funk and fusion. Members stay together for one full year.',
       },
       tnwjo: {
         name: 'The New Wave Jazz Orchestra',
-        desc: 'Riding the new wave of contemporary jazz from Osaka. Always pushing boundaries.',
+        desc: 'A band dedicated exclusively to the music of jazz legend Count Basie. Members stay together for one full year.',
       },
     },
 
