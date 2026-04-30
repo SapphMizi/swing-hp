@@ -102,7 +102,10 @@ export function Hero() {
 
   return (
     <section ref={containerRef} className="relative h-screen overflow-hidden">
-      {/* Background image layers */}
+      {/* Fallback gradient (base layer — always visible beneath images) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a05] via-swing-deep to-[#0a0c18]" />
+
+      {/* Background image layers — stacked above gradient */}
       {HERO_IMAGES.map((src, i) => (
         <div
           key={src}
@@ -111,9 +114,6 @@ export function Hero() {
           style={{ backgroundImage: `url(${src})` }}
         />
       ))}
-
-      {/* Fallback gradient (shown when no images) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a05] via-swing-deep to-[#0a0c18]" />
 
       {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-swing-black via-swing-black/40 to-transparent" />
