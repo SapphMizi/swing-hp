@@ -39,15 +39,15 @@ export const en = {
     bands: {
       dgun: {
         name: 'D-gun',
-        desc: 'The origin of our big band tradition. The core of SWING where tradition meets innovation.',
+        desc: 'A big band for members who join the club. We learn from our seniors and enjoy jazz together.',
       },
       sao: {
         name: 'Swing Arcade Orchestra',
-        desc: 'Pop, anime, and game music reimagined through big band arrangements.',
+        desc: 'A band that challenges all genres, focusing on funk and fusion. We perform together for one year.',
       },
       tnwjo: {
         name: 'The New Wave Jazz Orchestra',
-        desc: 'Riding the new wave of contemporary jazz from Osaka. Always pushing boundaries.',
+        desc: 'A band that plays only Count Basie\'s songs. We perform together for one year.',
       },
     },
 
