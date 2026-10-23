@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-23T08:53:25+00:00",
+  "title": "Design System: 大阪大学 軽音楽部 SWING",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "画用紙 Paper",
+        "canonical": "oklch(91.3% 0.051 64)",
+        "tonalRamp": [
+          "oklch(15% 0.030 64)",
+          "oklch(26% 0.051 64)",
+          "oklch(38% 0.051 64)",
+          "oklch(50% 0.051 64)",
+          "oklch(62% 0.051 64)",
+          "oklch(74% 0.051 64)",
+          "oklch(85% 0.051 64)",
+          "oklch(95% 0.030 64)"
+        ]
+      },
+      "paper-light": {
+        "role": "neutral",
+        "displayName": "明るい画用紙 Paper Light",
+        "canonical": "oklch(95.7% 0.024 63)",
+        "tonalRamp": [
+          "oklch(15% 0.014 63)",
+          "oklch(26% 0.024 63)",
+          "oklch(38% 0.024 63)",
+          "oklch(50% 0.024 63)",
+          "oklch(62% 0.024 63)",
+          "oklch(74% 0.024 63)",
+          "oklch(85% 0.024 63)",
+          "oklch(95% 0.014 63)"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "焦げ茶の線 Ink",
+        "canonical": "oklch(24.9% 0.022 9)",
+        "tonalRamp": [
+          "oklch(15% 0.013 9)",
+          "oklch(26% 0.022 9)",
+          "oklch(38% 0.022 9)",
+          "oklch(50% 0.022 9)",
+          "oklch(62% 0.022 9)",
+          "oklch(74% 0.022 9)",
+          "oklch(85% 0.022 9)",
+          "oklch(95% 0.013 9)"
+        ]
+      },
+      "pink": {
+        "role": "secondary",
+        "displayName": "桃の塗り Pink",
+        "canonical": "oklch(62.1% 0.192 9)",
+        "tonalRamp": [
+          "oklch(15% 0.096 9)",
+          "oklch(26% 0.160 9)",
+          "oklch(38% 0.160 9)",
+          "oklch(50% 0.160 9)",
+          "oklch(62% 0.160 9)",
+          "oklch(74% 0.160 9)",
+          "oklch(85% 0.160 9)",
+          "oklch(95% 0.096 9)"
+        ]
+      },
+      "pink-deep": {
+        "role": "primary",
+        "displayName": "濃い桃 Deep Pink",
+        "canonical": "oklch(51.3% 0.164 11)",
+        "tonalRamp": [
+          "oklch(15% 0.096 11)",
+          "oklch(26% 0.160 11)",
+          "oklch(38% 0.160 11)",
+          "oklch(50% 0.160 11)",
+          "oklch(62% 0.160 11)",
+          "oklch(74% 0.160 11)",
+          "oklch(85% 0.160 11)",
+          "oklch(95% 0.096 11)"
+        ]
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "ギターの青 Blue",
+        "canonical": "oklch(52.5% 0.081 245)",
+        "tonalRamp": [
+          "oklch(15% 0.049 245)",
+          "oklch(26% 0.081 245)",
+          "oklch(38% 0.081 245)",
+          "oklch(50% 0.081 245)",
+          "oklch(62% 0.081 245)",
+          "oklch(74% 0.081 245)",
+          "oklch(85% 0.081 245)",
+          "oklch(95% 0.049 245)"
+        ]
+      },
+      "teal": {
+        "role": "tertiary",
+        "displayName": "サックスの水色 Teal",
+        "canonical": "oklch(75.7% 0.069 205)",
+        "tonalRamp": [
+          "oklch(15% 0.041 205)",
+          "oklch(26% 0.069 205)",
+          "oklch(38% 0.069 205)",
+          "oklch(50% 0.069 205)",
+          "oklch(62% 0.069 205)",
+          "oklch(74% 0.069 205)",
+          "oklch(85% 0.069 205)",
+          "oklch(95% 0.041 205)"
+        ]
+      },
+      "orange": {
+        "role": "tertiary",
+        "displayName": "G の橙 Orange",
+        "canonical": "oklch(74.2% 0.144 54)",
+        "tonalRamp": [
+          "oklch(15% 0.086 54)",
+          "oklch(26% 0.144 54)",
+          "oklch(38% 0.144 54)",
+          "oklch(50% 0.144 54)",
+          "oklch(62% 0.144 54)",
+          "oklch(74% 0.144 54)",
+          "oklch(85% 0.144 54)",
+          "oklch(95% 0.086 54)"
+        ]
+      },
+      "yellow": {
+        "role": "tertiary",
+        "displayName": "吹き出しの黄 Yellow",
+        "canonical": "oklch(89.3% 0.132 92)",
+        "tonalRamp": [
+          "oklch(15% 0.079 92)",
+          "oklch(26% 0.132 92)",
+          "oklch(38% 0.132 92)",
+          "oklch(50% 0.132 92)",
+          "oklch(62% 0.132 92)",
+          "oklch(74% 0.132 92)",
+          "oklch(85% 0.132 92)",
+          "oklch(95% 0.079 92)"
+        ]
+      },
+      "green": {
+        "role": "tertiary",
+        "displayName": "傘の黄緑 Green",
+        "canonical": "oklch(73.2% 0.131 129)",
+        "tonalRamp": [
+          "oklch(15% 0.079 129)",
+          "oklch(26% 0.131 129)",
+          "oklch(38% 0.131 129)",
+          "oklch(50% 0.131 129)",
+          "oklch(62% 0.131 129)",
+          "oklch(74% 0.131 129)",
+          "oklch(85% 0.131 129)",
+          "oklch(95% 0.079 129)"
+        ]
+      },
+      "red": {
+        "role": "secondary",
+        "displayName": "N の赤 Red",
+        "canonical": "oklch(65.3% 0.182 30)",
+        "tonalRamp": [
+          "oklch(15% 0.096 30)",
+          "oklch(26% 0.160 30)",
+          "oklch(38% 0.160 30)",
+          "oklch(50% 0.160 30)",
+          "oklch(62% 0.160 30)",
+          "oklch(74% 0.160 30)",
+          "oklch(85% 0.160 30)",
+          "oklch(95% 0.096 30)"
+        ]
+      },
+      "navy": {
+        "role": "secondary",
+        "displayName": "鍵盤の紺 Navy",
+        "canonical": "oklch(33.8% 0.075 264)",
+        "tonalRamp": [
+          "oklch(15% 0.045 264)",
+          "oklch(26% 0.075 264)",
+          "oklch(38% 0.075 264)",
+          "oklch(50% 0.075 264)",
+          "oklch(62% 0.075 264)",
+          "oklch(74% 0.075 264)",
+          "oklch(85% 0.075 264)",
+          "oklch(95% 0.045 264)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "セクションの英字の大見出し。大文字、黄色のマーカー線付き。"
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "バンド名。"
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "お知らせ・ライブレポートの題名、ボタンの文字。"
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "ヒーローの紹介文、バンド紹介、入部案内。"
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "本文。記事本文は 68ch まで。"
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "見出しの日本語リボン、補足。12px 以上。"
+      },
+      "hand": {
+        "displayName": "Hand (Klee One)",
+        "purpose": "日付と短い手書きの注記だけ。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "sticky",
+        "value": "0 6px 10px -5px rgba(43,29,31,0.45)",
+        "purpose": "日付の付箋。"
+      },
+      {
+        "name": "photo",
+        "value": "0 10px 18px -10px rgba(43,29,31,0.5)",
+        "purpose": "テープで留めた写真、紙片。"
+      },
+      {
+        "name": "photo-hero",
+        "value": "0 14px 24px -14px rgba(43,29,31,0.55)",
+        "purpose": "ヒーローの写真。"
+      },
+      {
+        "name": "on-ink",
+        "value": "0 18px 30px -16px rgba(0,0,0,0.6)",
+        "purpose": "ink の帯に置いた紙片。"
+      },
+      {
+        "name": "key-travel",
+        "value": "0 3px 0 0 var(--color-ink)",
+        "purpose": "鍵盤ナビの鍵の厚み。ホバーとフォーカスで消え、鍵が 3px 沈む。ほかでは使わない。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "見出しのマーカー線(300ms、1回だけ)。"
+      },
+      {
+        "name": "state",
+        "value": "150ms",
+        "purpose": "ボタン・ピル・行のホバーの色と位置の変化。"
+      },
+      {
+        "name": "key-press",
+        "value": "100ms",
+        "purpose": "鍵盤ナビの鍵が沈む動き。"
+      },
+      {
+        "name": "intro",
+        "value": "約 1.4s(ロゴの描画 1s + 覆いの退場 0.4s expo.in)",
+        "purpose": "セッション最初の1回のローディング画面。クリックかキー入力で飛ばせる。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "ローディング画面、マーカー線、ヒーロー写真の切り替えを止める。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "base",
+        "value": "390px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "container",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "主な行動(見学・入部の案内)へのボタン。右端の円の矢印で先に進むことを示す。",
+      "html": "<a href=\"#\" class=\"ds-btn ds-btn-primary\"><span>見学・入部の案内</span><span class=\"ds-dot\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:16px;min-height:48px;padding:8px 8px 8px 24px;border:2px solid;border-radius:9999px;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;text-decoration:none;transition:background-color 150ms,border-color 150ms;} .ds-btn .ds-dot{display:flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:9999px;transition:transform 150ms;} .ds-btn:hover .ds-dot{transform:translateX(2px);} .ds-btn-primary{background:var(--color-pink-deep,#b0304f);border-color:var(--color-pink-deep,#b0304f);color:var(--color-paper-light,#fdeee1);} .ds-btn-primary .ds-dot{background:var(--color-paper-light,#fdeee1);color:var(--color-pink-deep,#b0304f);} .ds-btn-primary:hover{background:var(--color-ink,#2b1d1f);border-color:var(--color-ink,#2b1d1f);} .ds-btn-primary:hover .ds-dot{color:var(--color-ink,#2b1d1f);} .ds-btn-primary:focus-visible{outline:3px solid var(--color-ink,#2b1d1f);outline-offset:2px;box-shadow:0 0 0 5px var(--color-yellow,#fbd96e);}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "2番目の行動(スケジュールなど)。濃い帯の上でもこの形を使う。",
+      "html": "<a href=\"#\" class=\"ds-btn ds-btn-secondary\"><span>スケジュール</span><span class=\"ds-dot\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:16px;min-height:48px;padding:8px 8px 8px 24px;border:2px solid;border-radius:9999px;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;text-decoration:none;transition:background-color 150ms,border-color 150ms;} .ds-btn .ds-dot{display:flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:9999px;transition:transform 150ms;} .ds-btn:hover .ds-dot{transform:translateX(2px);} .ds-btn-secondary{background:var(--color-paper-light,#fdeee1);border-color:var(--color-ink,#2b1d1f);color:var(--color-ink,#2b1d1f);} .ds-btn-secondary .ds-dot{background:var(--color-ink,#2b1d1f);color:var(--color-paper-light,#fdeee1);} .ds-btn-secondary:hover{background:var(--color-yellow,#fbd96e);} .ds-btn-secondary:focus-visible{outline:3px solid var(--color-ink,#2b1d1f);outline-offset:2px;box-shadow:0 0 0 5px var(--color-yellow,#fbd96e);}"
+    },
+    {
+      "name": "Pill Link",
+      "kind": "chip",
+      "refersTo": "pill-link",
+      "description": "SNS リンクや言語切り替えの丸い小さなリンク。高さ 44px。",
+      "html": "<a href=\"#\" class=\"ds-pill\">Instagram</a>",
+      "css": ".ds-pill{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:2px solid var(--color-ink,#2b1d1f);border-radius:9999px;background:var(--color-paper-light,#fdeee1);color:var(--color-ink,#2b1d1f);font-family:'Zen Maru Gothic',sans-serif;font-weight:700;text-decoration:none;transition:background-color 150ms,color 150ms;} .ds-pill:hover{background:var(--color-ink,#2b1d1f);color:var(--color-paper-light,#fdeee1);} .ds-pill:focus-visible{outline:3px solid var(--color-ink,#2b1d1f);outline-offset:2px;box-shadow:0 0 0 5px var(--color-yellow,#fbd96e);}"
+    },
+    {
+      "name": "News Row with Sticky Date",
+      "kind": "card",
+      "refersTo": "news-row",
+      "description": "お知らせの行。色鉛筆の色の面に、傾けた黄色の付箋の日付をはみ出して貼る。",
+      "html": "<a href=\"#\" class=\"ds-news\"><time class=\"ds-sticky\"><span class=\"ds-y\">2026</span><span class=\"ds-md\">4.2</span></time><span class=\"ds-news-t\">4月の新歓ライブの日程を公開しました</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-news{display:flex;align-items:center;gap:20px;min-height:96px;padding:12px 20px 12px 12px;margin-left:24px;border:2px solid var(--color-ink,#2b1d1f);border-radius:16px;background:var(--color-teal,#7abdc5);color:var(--color-ink,#2b1d1f);font-family:'Zen Maru Gothic',sans-serif;text-decoration:none;transition:transform 150ms;} .ds-news:hover{transform:translateY(-2px);} .ds-news:focus-visible{outline:3px solid var(--color-ink,#2b1d1f);outline-offset:2px;box-shadow:0 0 0 5px var(--color-yellow,#fbd96e);} .ds-sticky{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;width:72px;height:72px;margin:-24px 0 -24px -24px;background:var(--color-yellow,#fbd96e);line-height:1;rotate:-4deg;box-shadow:0 6px 10px -5px rgba(43,29,31,.45);} .ds-y{font-size:12px;font-weight:700;} .ds-md{margin-top:4px;font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;} .ds-news-t{flex:1;font-weight:700;line-height:1.375;}"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "section-ribbon",
+      "description": "英字の大見出しと黄色のマーカー線、その下の日本語リボン。",
+      "html": "<div class=\"ds-head\"><h2 class=\"ds-h\"><span class=\"ds-mark\"></span><span class=\"ds-ht\">News</span></h2><p class=\"ds-ribbon\">お知らせ</p></div>",
+      "css": ".ds-head{font-family:'Zen Maru Gothic',sans-serif;color:var(--color-ink,#2b1d1f);} .ds-h{position:relative;display:inline-block;margin:0;font-size:clamp(2.4rem,7vw,4.75rem);font-weight:900;line-height:.95;letter-spacing:-.01em;text-transform:uppercase;} .ds-mark{position:absolute;bottom:-.06em;left:-3%;width:106%;height:.42em;background:var(--color-yellow,#fbd96e);border-radius:2px 8px 6px 3px;clip-path:inset(0 100% 0 0);transition:clip-path 300ms cubic-bezier(.16,1,.3,1);} .ds-head:hover .ds-mark{clip-path:inset(0 0 0 0);} .ds-ht{position:relative;} .ds-ribbon{width:fit-content;margin:12px 0 0;padding:2px 20px 2px 12px;background:var(--color-pink-deep,#b0304f);color:var(--color-paper-light,#fdeee1);font-size:14px;font-weight:700;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 50%,100% 100%,0 100%);}"
+    },
+    {
+      "name": "Taped Photo",
+      "kind": "custom",
+      "description": "紙にマスキングテープで留めた写真。白い余白、傾き、紙に貼った物の影。",
+      "html": "<figure class=\"ds-photo\"><div class=\"ds-img\"></div><span class=\"ds-tape ds-t1\"></span><span class=\"ds-tape ds-t2\"></span></figure>",
+      "css": ".ds-photo{position:relative;width:280px;margin:16px;padding:8px;background:var(--color-paper-light,#fdeee1);rotate:-2deg;box-shadow:0 10px 18px -10px rgba(43,29,31,.5);} .ds-img{aspect-ratio:4/3;background:var(--color-navy,#23365e);} .ds-tape{position:absolute;top:-12px;height:24px;mix-blend-mode:multiply;} .ds-t1{left:12%;width:80px;rotate:-6deg;background:rgb(224 69 111/.7);} .ds-t2{right:10%;width:64px;rotate:8deg;background:rgb(122 189 197/.8);}"
+    },
+    {
+      "name": "Keyboard Nav",
+      "kind": "nav",
+      "refersTo": "nav-key",
+      "description": "PC のヘッダーナビ。白鍵の形のリンクが、ホバーとフォーカスで 3px 沈む。現在地は黄色。",
+      "html": "<nav><ul class=\"ds-keys\"><li><a href=\"#\" class=\"ds-key\" aria-current=\"page\"><b lang=\"en\">About</b><small>部について</small></a><span class=\"ds-black\"></span></li><li><a href=\"#\" class=\"ds-key\"><b lang=\"en\">News</b><small>お知らせ</small></a><span class=\"ds-black\"></span></li><li><a href=\"#\" class=\"ds-key\"><b lang=\"en\">Live</b><small>ライブレポート</small></a></li></ul></nav>",
+      "css": ".ds-keys{display:flex;margin:0;padding:0;list-style:none;font-family:'Zen Maru Gothic',sans-serif;} .ds-keys li{position:relative;margin-left:-2px;} .ds-keys li:first-child{margin-left:0;} .ds-key{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:102px;height:74px;padding-bottom:8px;border:2px solid var(--color-ink,#2b1d1f);border-top:0;border-radius:0 0 12px 12px;background:var(--color-paper-light,#fdeee1);color:var(--color-ink,#2b1d1f);line-height:1.25;text-decoration:none;box-shadow:0 3px 0 0 var(--color-ink,#2b1d1f);transition:translate 100ms,box-shadow 100ms,background-color 100ms;} .ds-key b{font-size:15px;font-weight:900;} .ds-key small{font-size:12px;font-weight:700;} .ds-key[aria-current]{background:var(--color-yellow,#fbd96e);} .ds-key:hover,.ds-key:focus-visible{translate:0 3px;box-shadow:none;} .ds-key:focus-visible{outline:3px solid var(--color-ink,#2b1d1f);outline-offset:2px;} .ds-black{position:absolute;top:0;right:-9px;z-index:1;width:16px;height:38px;border-radius:0 0 6px 6px;background:var(--color-ink,#2b1d1f);pointer-events:none;}"
+    },
+    {
+      "name": "Band Sheet",
+      "kind": "card",
+      "refersTo": "band-sheet-swing-arcade",
+      "description": "バンドごとの画面幅いっぱいの面。色と文字色は src/lib/bands.ts の対応に従う。",
+      "html": "<section class=\"ds-band\"><h3>Swing Arcade Orchestra</h3><p>ファンクやフュージョンを中心に、オールジャンルに挑戦するバンドです。</p><a href=\"#\" class=\"ds-band-pill\">Instagram</a></section>",
+      "css": ".ds-band{padding:56px 24px;background:var(--color-red,#ea5a48);color:var(--color-ink,#2b1d1f);font-family:'Zen Maru Gothic',sans-serif;} .ds-band h3{margin:0;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.05;text-wrap:balance;} .ds-band p{max-width:46ch;margin:20px 0 24px;font-size:18px;font-weight:500;line-height:1.625;} .ds-band-pill{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:2px solid var(--color-ink,#2b1d1f);border-radius:9999px;background:var(--color-paper-light,#fdeee1);color:var(--color-ink,#2b1d1f);font-weight:700;text-decoration:none;transition:background-color 150ms,color 150ms;} .ds-band-pill:hover{background:var(--color-ink,#2b1d1f);color:var(--color-paper-light,#fdeee1);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "部のアイコンを広げた画用紙",
+    "overview": "**Creative North Star: \"部のアイコンを広げた画用紙\"**\n\nサイト全体を、部の SNS アイコンの桃色の画用紙を大きく広げたものとして扱う。地は紙の色(`paper`)で、文字はすべてアイコンの線と同じ焦げ茶(`ink`)。アイコンの中にある手描きのロゴ、吹き出し、キャラクター、鍵盤を、そのまま切り出して画面の部品にしている。手描きの線を CSS やフィルターで真似ることはせず、手描きに見えるものは必ずアイコンから起こした画像である。\n\n色鉛筆の色(水色、橙、黄緑、黄)は、紙に少しだけ置く差し色ではなく、お知らせの行や付箋、写真のない記事の面として広く塗る。3つのバンドはそれぞれのテーマカラーの面を画面幅いっぱいに持ち、上下をちぎった紙の縁でつなぐ。写真は紙にマスキングテープで留めたように白い余白を付けて少し傾ける。密度は低めで、スマートフォンの 390px 幅で読みやすいことを基準にし、PC ではそれを横に広げる。\n\n黒い背景にアンバーの光を置くジャズクラブ風の見た目と、クリーム色に差し色を1つだけ置いた量産型のランディングページは採らない。ダークモードは作らない。",
+    "keyCharacteristics": [
+      "地は紙色、文字は焦げ茶の一色。ライトテーマだけ",
+      "色鉛筆の色を面で塗り、その上の文字は `ink`",
+      "手描きの部品はアイコンから切り出したラスター画像(`public/images/hand/`)",
+      "区切りはちぎった紙の縁か鍵盤の帯。直線の罫線で区切らない",
+      "写真と付箋は少し傾け、紙に貼った物として柔らかい影を落とす",
+      "押せるものは丸いピル形で、高さ 44px 以上"
+    ],
+    "rules": [
+      {
+        "name": "The Crayon Field Rule",
+        "body": "`teal`・`orange`・`green`・`yellow`・`red` は面として広く塗り、その上の文字は必ず `ink` にする。差し色を細い線や小さな点だけに使って済ませない。",
+        "section": "colors"
+      },
+      {
+        "name": "The Fill Not Text Rule",
+        "body": "`pink` と `blue` は紙の上で 4.5:1 に届かないので、文字にもアイコンにも使わない。リンクとボタンの色は `pink-deep` だけ。",
+        "section": "colors"
+      },
+      {
+        "name": "The Band Color Rule",
+        "body": "バンドの面の色と文字色は `src/lib/bands.ts` の対応(`blue`/`paper-light`、`red`/`ink`、`navy`/`paper-light`)から取り、画面ごとに決め直さない。バンドは正式名だけで示し、略称を出さない。",
+        "section": "colors"
+      },
+      {
+        "name": "The One Ink Band Rule",
+        "body": "`ink` を背景にした濃い帯は1ページに1か所まで。",
+        "section": "colors"
+      },
+      {
+        "name": "The English Head, Japanese Ribbon Rule",
+        "body": "セクションの見出しは英字の大見出しの下に、`pink-deep` のリボン形ラベルで日本語を添える。英語表示のときはリボンを出さない。リボンを見出しの上に置いたり、英字の小見出しを別に作ったりしない。",
+        "section": "typography"
+      },
+      {
+        "name": "The Pencil Note Rule",
+        "body": "Klee One は日付と短い注記だけに使い、段落や見出しには使わない。",
+        "section": "typography"
+      },
+      {
+        "name": "The Torn Edge or Keys Rule",
+        "body": "セクションの境目は、ちぎった紙の縁(`TornEdge`、下の面の色で塗り上に 31px 食い込ませる)か、鍵盤の帯(`Keys`、高さ 34〜40px)で区切る。罫線やグラデーションの線で区切らない。",
+        "section": "layout"
+      },
+      {
+        "name": "The Pinned Paper Rule",
+        "body": "影は紙に貼った物にだけ付ける。ボタン、行、カードの枠には影を付けず、`ink` の 2px の線で輪郭を取る。",
+        "section": "elevation"
+      },
+      {
+        "name": "The Key Travel Only Rule",
+        "body": "ずらした硬い影は、鍵盤の鍵が押し下がる表現にだけ使う。ボタンやカードに転用しない。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do 地は `paper` か `paper-light`、文字は `ink` にする。",
+      "Do 色鉛筆の色(`teal`・`orange`・`green`・`yellow`)は面で塗り、上の文字は `ink` にする。",
+      "Do リンクとボタンは `pink-deep` にする。",
+      "Do バンドの色は `src/lib/bands.ts` から取り、バンドは正式名だけで書く。",
+      "Do セクションの境目は `TornEdge` か `Keys` にする。",
+      "Do 手描きの部品は `public/images/hand/` の画像を使い、ロゴは幅 480px(写真がないときは 520px)までで表示する。",
+      "Do 写真と付箋は少し傾け、紙に貼った物の影を付ける。",
+      "Do 押せる要素は高さ 44px 以上、文字は 12px 以上にする。",
+      "Do 動きは状態の変化とマーカー線程度にとどめ、150〜300ms で1回だけ再生し、`prefers-reduced-motion: reduce` では止める。"
+    ],
+    "donts": [
+      "Don't 黒や濃紺をページの地にしない。ダークモードを作らない。",
+      "Don't `pink` と `blue` を紙の上の文字に使わない。",
+      "Don't ぼかした光の円、ノイズ、装飾のグラデーション、`backdrop-blur` のヘッダーを使わない。",
+      "Don't CSS や SVG フィルターで手描き風の線を作らない。",
+      "Don't 罫線やグラデーションの線でセクションを区切らない。",
+      "Don't 同じ大きさの角丸カードを並べるだけのレイアウトや、カードの背景に大きく薄い番号を置く装飾を使わない。",
+      "Don't `font-mono` と広い字間の英字の小見出しや、見出しの上に置く小見出しを作らない。",
+      "Don't 浮遊するパーティクル、Ken Burns、逆再生されるスクロール演出を使わない。",
+      "Don't 絵文字をアイコンの代わりに使わない。",
+      "Don't ずらした硬い影を鍵盤のナビ以外に使わない。"
+    ]
+  }
+}
