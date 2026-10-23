@@ -1,54 +1,55 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { SectionTitle } from '../components/ui/SectionTitle'
-import { BandCard } from '../components/home/BandCard'
+import { BandSheets } from '../components/home/BandSheets'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { bandsQuery } from '../lib/queries'
 
-export const Route = createFileRoute('/about')({ component: About })
-
-const BANDS_DATA = [
-  { key: 'bands.dgun' },
-  { key: 'bands.sao' },
-  { key: 'bands.tnwjo' },
-] as const
+export const Route = createFileRoute('/about')({
+  loader: ({ context: { queryClient } }) =>
+    queryClient.ensureQueryData(bandsQuery()),
+  head: () => ({ meta: [{ title: '部について | 大阪大学 軽音楽部 SWING' }] }),
+  component: About,
+})
 
 function About() {
   const { t } = useTranslation()
-  return (
-    <main className="pt-32 pb-24 px-8 md:px-16 max-w-7xl mx-auto">
-      <SectionTitle subtitle={t('about.subtitle')} title={t('about.title')} />
+  const { data: bands } = useSuspenseQuery(bandsQuery())
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
+  return (
+    <main>
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-20 pt-12 sm:px-6 md:pt-16 lg:grid-cols-[3fr_2fr] lg:items-center">
         <div>
-          <p className="text-swing-warm-gray-light leading-loose text-base md:text-lg mb-6">
+          <SectionHeading as="h1" en="About" ja={t('about.label')} />
+          <p className="max-w-[36ch] text-xl font-bold leading-relaxed">
             {t('about.intro')}
           </p>
-          <h3 className="text-swing-amber font-mono text-xs tracking-[0.35em] uppercase mb-3">
-            {t('about.activity')}
-          </h3>
-          <p className="text-swing-warm-gray-light leading-loose text-sm md:text-base">
-            {t('about.activityText')}
-          </p>
+          <dl className="mt-10 grid gap-8 sm:grid-cols-2">
+            <div>
+              <dt className="text-lg font-black">{t('about.activityTitle')}</dt>
+              <dd className="mt-2 leading-relaxed">
+                {t('about.activityText')}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-lg font-black">{t('about.placeTitle')}</dt>
+              <dd className="mt-2 leading-relaxed">{t('about.placeText')}</dd>
+            </div>
+          </dl>
         </div>
-        <div className="flex items-center justify-center">
-          <img
-            src="/images/swing_logo.jpg"
-            alt="SWING"
-            className="w-64 h-64 object-contain rounded-2xl opacity-90"
-          />
-        </div>
+        <img
+          src="/images/hand/logo.webp"
+          alt="SWING  All you need is Jazz"
+          width={572}
+          height={420}
+          className="mx-auto h-auto w-full max-w-[460px]"
+        />
       </div>
-
-      <SectionTitle subtitle="Our Bands" title={t('home.bandsTitle')} />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {BANDS_DATA.map(({ key }, i) => (
-          <BandCard
-            key={key}
-            name={t(`${key}.name`)}
-            desc={t(`${key}.desc`)}
-            index={i}
-          />
-        ))}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHeading en="Our Bands" ja={t('home.bandsLabel')} />
       </div>
+      <BandSheets bands={bands} headingLevel="h3" />
+      <div className="h-20" />
     </main>
   )
 }

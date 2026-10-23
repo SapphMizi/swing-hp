@@ -1,177 +1,113 @@
-import { useEffect, useRef } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { gsap } from 'gsap'
-import { MusicNoteParticles } from './MusicNoteParticles'
+import type { SiteSettings } from '../../lib/cms-types'
+import { imageSrcSet, imageUrl, useLocalized } from '../../lib/format'
+import { ButtonLink } from '../ui/ButtonLink'
+import { Keys } from '../ui/Keys'
 
-// Hero uses whatever images are in /images/hero-*.jpg
-// Falls back to a gradient if no images are loaded
-const HERO_IMAGES = [
-  '/images/hero-1.jpg',
-  '/images/hero-2.jpg',
-  '/images/hero-3.jpg',
-]
+const INTERVAL = 6000
 
-export function Hero() {
+// トップの最初の画面。アイコンの手描きロゴと、テープで留めたライブ写真。
+// 写真は microCMS の site.heroImages から読み、未登録ならロゴだけを中央に置く。
+export function Hero({ site }: { site: SiteSettings }) {
   const { t } = useTranslation()
-  const containerRef = useRef<HTMLElement>(null)
-  const imageRefs = useRef<HTMLDivElement[]>([])
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const nameRef = useRef<HTMLSpanElement>(null)
-  const subRef = useRef<HTMLParagraphElement>(null)
-  const ctaRef = useRef<HTMLDivElement>(null)
+  const l = useLocalized()
+  const images = site.heroImages ?? []
+  const [current, setCurrent] = useState(0)
 
-  // Ken Burns: cycle images with slow zoom
   useEffect(() => {
-    const imgs = imageRefs.current.filter(Boolean)
-    if (imgs.length === 0) return
-    let current = 0
-
-    const showNext = () => {
-      const prev = current
-      current = (current + 1) % imgs.length
-
-      gsap.to(imgs[prev], { opacity: 0, duration: 1.2, ease: 'power2.inOut' })
-      gsap.to(imgs[current], { opacity: 1, duration: 1.2, ease: 'power2.inOut' })
-
-      // Ken Burns on outgoing
-      gsap.fromTo(
-        imgs[prev],
-        { scale: 1.08 },
-        { scale: 1.0, duration: 8, ease: 'linear' },
-      )
-      // Ken Burns on incoming
-      gsap.fromTo(
-        imgs[current],
-        { scale: 1.0 },
-        { scale: 1.08, duration: 8, ease: 'linear' },
-      )
-    }
-
-    // Init first image
-    gsap.set(imgs[0], { opacity: 1 })
-    gsap.fromTo(imgs[0], { scale: 1.0 }, { scale: 1.08, duration: 8, ease: 'linear' })
-
-    const interval = setInterval(showNext, 6000)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Text reveal on mount (after loading screen)
-  useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.3 })
-    tl.fromTo(
-      titleRef.current,
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out' },
+    if (images.length < 2) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(
+      () => setCurrent((c) => (c + 1) % images.length),
+      INTERVAL,
     )
-    tl.fromTo(
-      nameRef.current,
-      { y: 40, opacity: 0, letterSpacing: '0.5em' },
-      { y: 0, opacity: 1, letterSpacing: '0.05em', duration: 1.0, ease: 'expo.out' },
-      '-=0.4',
-    )
-    tl.fromTo(
-      subRef.current,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' },
-      '-=0.5',
-    )
-    tl.fromTo(
-      ctaRef.current,
-      { y: 15, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-      '-=0.4',
-    )
-  }, [])
+    return () => clearInterval(id)
+  }, [images.length])
 
-  // Scroll-driven parallax on hero content
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const onScroll = () => {
-      const progress = window.scrollY / window.innerHeight
-      gsap.to(el.querySelector('.hero-content'), {
-        y: progress * 80,
-        opacity: 1 - progress * 1.5,
-        duration: 0,
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const copy = site.heroCopy
+    ? l(site.heroCopy, site.heroCopy_en)
+    : t('home.heroCopy')
+  const hasPhoto = images.length > 0
+
+  const intro = (
+    <>
+      <h1 className="m-0">
+        <img
+          src="/images/hand/logo.webp"
+          alt="SWING  All you need is Jazz"
+          width={572}
+          height={420}
+          fetchPriority="high"
+          className={`h-auto w-full ${hasPhoto ? 'max-w-[480px]' : 'mx-auto max-w-[520px]'}`}
+        />
+      </h1>
+      <p
+        className={`mt-4 max-w-[22em] text-lg font-bold leading-relaxed md:text-xl ${hasPhoto ? '' : 'mx-auto text-center'}`}
+      >
+        {copy}
+      </p>
+      <div
+        className={`mt-8 flex flex-wrap gap-3 ${hasPhoto ? '' : 'justify-center'}`}
+      >
+        <ButtonLink to="/contact">{t('home.ctaJoin')}</ButtonLink>
+        <ButtonLink to="/schedule" variant="secondary">
+          {t('home.ctaSchedule')}
+        </ButtonLink>
+      </div>
+    </>
+  )
 
   return (
-    <section ref={containerRef} className="relative h-screen overflow-hidden">
-      {/* Background image layers */}
-      {HERO_IMAGES.map((src, i) => (
-        <div
-          key={src}
-          ref={(el) => { if (el) imageRefs.current[i] = el }}
-          className="absolute inset-0 bg-cover bg-center opacity-0 will-change-transform"
-          style={{ backgroundImage: `url(${src})` }}
-        />
-      ))}
-
-      {/* Fallback gradient (shown when no images) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a05] via-swing-deep to-[#0a0c18]" />
-
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-swing-black via-swing-black/40 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-swing-black/60 via-transparent to-transparent" />
-
-      {/* Subtle noise grain */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")', backgroundSize: '200px 200px' }}
-      />
-
-      {/* Floating music note particles */}
-      <MusicNoteParticles />
-
-      {/* Hero content */}
-      <div className="hero-content absolute inset-0 flex flex-col justify-end pb-24 px-8 md:px-16 max-w-5xl">
-        <p
-          ref={titleRef}
-          className="text-swing-amber font-mono text-xs md:text-sm tracking-[0.4em] uppercase mb-3 opacity-0"
-        >
-          {t('home.heroTitle')}
-        </p>
-        <span
-          ref={nameRef}
-          className="block font-bold text-swing-cream leading-none mb-6 opacity-0"
-          style={{ fontSize: 'clamp(4rem, 12vw, 9rem)', letterSpacing: '0.05em' }}
-        >
-          {t('home.heroName')}
-        </span>
-        <p
-          ref={subRef}
-          className="text-swing-warm-gray-light text-sm md:text-base max-w-md leading-relaxed mb-8 opacity-0"
-        >
-          {t('home.heroSub')}
-        </p>
-        <div ref={ctaRef} className="flex gap-4 flex-wrap opacity-0">
-          <Link
-            to="/schedule"
-            className="inline-flex items-center gap-2 bg-swing-amber text-swing-black font-bold text-sm px-6 py-3 rounded-full hover:bg-swing-amber-light transition-colors duration-200 tracking-wide"
-          >
-            {t('home.ctaSchedule')}
-          </Link>
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 border border-swing-amber/40 text-swing-cream text-sm px-6 py-3 rounded-full hover:border-swing-amber hover:text-swing-amber transition-all duration-200 tracking-wide"
-          >
-            {t('home.ctaAbout')}
-          </Link>
+    <section className="relative">
+      {hasPhoto ? (
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 pt-8 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:pb-20 lg:pt-12">
+          <div className="lg:col-span-5">{intro}</div>
+          <div className="relative lg:col-span-7">
+            <figure
+              className="relative bg-paper-light p-2.5 shadow-[0_14px_24px_-14px_rgba(43,29,31,0.55)]"
+              style={{ rotate: '-2deg' }}
+            >
+              <div className="relative aspect-[4/3] overflow-hidden">
+                {images.map((img, i) => (
+                  <img
+                    key={img.url}
+                    src={imageUrl(img, 1200)}
+                    srcSet={imageSrcSet(img, [640, 960, 1200, 1800])}
+                    sizes="(min-width: 1024px) 56vw, 92vw"
+                    alt={i === current ? t('home.heroPhotoAlt') : ''}
+                    aria-hidden={i !== current}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                    className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+                    style={{ opacity: i === current ? 1 : 0 }}
+                  />
+                ))}
+              </div>
+              <span
+                aria-hidden
+                className="absolute -top-3 left-[8%] h-7 w-24 -rotate-6 bg-pink/70 mix-blend-multiply"
+              />
+              <span
+                aria-hidden
+                className="absolute -top-3 right-[8%] h-7 w-20 rotate-[7deg] bg-teal/80 mix-blend-multiply"
+              />
+            </figure>
+            <img
+              src="/images/hand/chara.webp"
+              alt=""
+              width={323}
+              height={328}
+              className="absolute -bottom-10 -left-6 w-24 md:w-32"
+            />
+          </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 right-8 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-swing-warm-gray text-[10px] tracking-[0.3em] uppercase rotate-90 origin-center mb-6">
-          scroll
-        </span>
-        <div className="w-px h-12 bg-swing-amber/40 animate-pulse" />
-      </div>
+      ) : (
+        <div className="mx-auto max-w-3xl px-4 pb-16 pt-10 sm:px-6 lg:pt-14">
+          {intro}
+        </div>
+      )}
+      <Keys height={40} />
     </section>
   )
 }

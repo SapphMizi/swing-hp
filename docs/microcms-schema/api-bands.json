@@ -1,0 +1,74 @@
+{
+  "apiFields": [
+    {
+      "idValue": "3f2a8a7af9",
+      "fieldId": "band",
+      "name": "バンド",
+      "kind": "select",
+      "required": true,
+      "selectItems": [
+        {
+          "id": "0186e549",
+          "value": "Blue Spirits Jazz Orchestra"
+        },
+        {
+          "id": "dbc623fc",
+          "value": "Swing Arcade Orchestra"
+        },
+        {
+          "id": "ecf94ec5",
+          "value": "The New Wave Jazz Orchestra"
+        }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
+    },
+    {
+      "idValue": "0fb7479750",
+      "fieldId": "desc",
+      "name": "紹介文",
+      "kind": "textArea",
+      "required": true,
+      "isUnique": false
+    },
+    {
+      "idValue": "fa6cfbf1b9",
+      "fieldId": "desc_en",
+      "name": "紹介文（英語・任意）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "c352d218c8",
+      "fieldId": "photo",
+      "name": "写真",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "idValue": "a0ce064d38",
+      "fieldId": "instagram",
+      "name": "Instagram の URL",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "f65495927a",
+      "fieldId": "x",
+      "name": "X の URL",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "021e30d2f7",
+      "fieldId": "order",
+      "name": "並び順（小さい順に表示）",
+      "kind": "number",
+      "required": true
+    }
+  ],
+  "customFields": []
+}

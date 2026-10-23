@@ -11,3 +11,9 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
+
+# Impeccable の作業用ファイル(取り決めの surfaces/ は残す)
+.impeccable/review/
+.impeccable/hook.cache.json
+.impeccable/config.local.json
+.env.local

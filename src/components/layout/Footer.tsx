@@ -1,38 +1,55 @@
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { Keys } from '../ui/Keys'
+
+const LINKS = [
+  { key: 'nav.about', to: '/about' },
+  { key: 'nav.news', to: '/news' },
+  { key: 'nav.liveReports', to: '/live-reports' },
+  { key: 'nav.schedule', to: '/schedule' },
+  { key: 'nav.history', to: '/history' },
+  { key: 'nav.contact', to: '/contact' },
+] as const
 
 export function Footer() {
   const { t } = useTranslation()
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-swing-amber/10 bg-swing-black">
-      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Brand */}
-        <div className="flex flex-col items-center md:items-start gap-1">
-          <span className="font-bold text-swing-amber tracking-widest text-lg">SWING</span>
-          <span className="text-swing-warm-gray text-xs tracking-widest">
-            {t('footer.tagline')}
-          </span>
+    <footer className="bg-paper-light">
+      <Keys height={40} />
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[auto_1fr] md:items-end">
+        <div>
+          <img
+            src="/images/hand/logo.webp"
+            alt="SWING"
+            width={286}
+            height={210}
+            loading="lazy"
+            className="h-auto w-[220px]"
+          />
+          <p className="mt-2 font-hand text-lg">{t('footer.tagline')}</p>
         </div>
-
-        {/* Links */}
-        <nav className="flex gap-6 text-sm text-swing-warm-gray">
-          <Link to="/about" className="hover:text-swing-amber transition-colors duration-200">
-            {t('nav.about')}
-          </Link>
-          <Link to="/schedule" className="hover:text-swing-amber transition-colors duration-200">
-            {t('nav.schedule')}
-          </Link>
-          <Link to="/contact" className="hover:text-swing-amber transition-colors duration-200">
-            {t('nav.contact')}
-          </Link>
-        </nav>
-
-        {/* Copyright */}
-        <p className="text-swing-warm-gray text-xs tracking-wide">
-          © {year} {t('footer.copy')}
-        </p>
+        <div className="md:text-right">
+          <nav aria-label={t('nav.menu')}>
+            <ul className="grid grid-cols-2 gap-2 font-bold md:flex md:flex-wrap md:justify-end md:gap-x-6 md:gap-y-2">
+              {LINKS.map(({ key, to }) => (
+                <li key={to}>
+                  {/* スマホでは押しやすい大きさのボタン、PC では文字のリンク */}
+                  <Link
+                    to={to}
+                    className="flex min-h-12 items-center rounded-full border-2 border-ink bg-paper-light px-5 text-ink no-underline transition-colors duration-150 hover:bg-yellow md:min-h-0 md:border-0 md:bg-transparent md:px-0 md:underline md:hover:bg-transparent"
+                  >
+                    {t(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <p className="mt-6 text-sm">
+            © {year} {t('footer.name')}
+          </p>
+        </div>
       </div>
     </footer>
   )

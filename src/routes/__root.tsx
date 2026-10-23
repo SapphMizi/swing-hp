@@ -6,12 +6,15 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { useState, useEffect } from 'react'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import { Header } from '../components/layout/Header'
 import { Footer } from '../components/layout/Footer'
-import { LoadingScreen } from '../components/loading/LoadingScreen'
+import {
+  INTRO_STORAGE_KEY,
+  LoadingScreen,
+} from '../components/loading/LoadingScreen'
+import { NotFound } from '../components/NotFound'
 
 import '../i18n'
 import appCss from '../styles.css?url'
@@ -22,6 +25,10 @@ interface MyRouterContext {
   queryClient: QueryClient
 }
 
+// 初回訪問で、視差効果を減らす設定がオフのときだけ html[data-intro] を付ける。
+// React が動く前に実行されるので、ローディング画面がちらつかない。
+const INTRO_SCRIPT = `try{if(!sessionStorage.getItem('${INTRO_STORAGE_KEY}')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.intro='1'}}catch(e){}`
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
@@ -30,21 +37,35 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       { title: '大阪大学 軽音楽部 SWING' },
       {
         name: 'description',
-        content: 'All you need is Jazz — 大阪大学公認 軽音楽部SWING 公式サイト',
+        content:
+          '大阪大学 軽音楽部 SWING の公式サイト。豊中キャンパスの明道館で、3つのビッグバンドがジャズを演奏しています。',
       },
+      { name: 'theme-color', content: '#fbdcc0' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
+      { rel: 'icon', href: '/favicon.ico' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossOrigin: 'anonymous',
+      },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Maru+Gothic:wght@500;700;900&display=swap',
       },
     ],
+    scripts: [{ children: INTRO_SCRIPT }],
+  }),
+  // microCMS の更新を 1 分ほどで反映させるため、CDN のキャッシュは 60 秒にする
+  headers: () => ({
+    'Cache-Control':
+      'public, max-age=0, s-maxage=60, stale-while-revalidate=600',
   }),
   shellComponent: RootDocument,
   component: RootLayout,
+  notFoundComponent: NotFound,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -58,7 +79,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <TanStackDevtools
           config={{ position: 'bottom-right' }}
           plugins={[
-            { name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> },
+            {
+              name: 'Tanstack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+            },
             TanStackQueryDevtools,
           ]}
         />
@@ -69,39 +93,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 }
 
 function RootLayout() {
-  // Show loading screen only on first visit per browser session
-  const [showLoading, setShowLoading] = useState(false)
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    const alreadyLoaded = sessionStorage.getItem('swing_loaded')
-    if (alreadyLoaded) {
-      setLoaded(true)
-    } else {
-      setShowLoading(true)
-    }
-  }, [])
-
-  const handleLoadComplete = () => {
-    sessionStorage.setItem('swing_loaded', '1')
-    setShowLoading(false)
-    setLoaded(true)
-  }
-
   return (
     <>
-      {showLoading && <LoadingScreen onComplete={handleLoadComplete} />}
-      <div
-        style={{
-          opacity: loaded ? 1 : 0,
-          transition: 'opacity 0.6s ease',
-          visibility: loaded ? 'visible' : 'hidden',
-        }}
-      >
-        <Header />
-        <Outlet />
-        <Footer />
-      </div>
+      <LoadingScreen />
+      <Header />
+      <Outlet />
+      <Footer />
     </>
   )
 }
