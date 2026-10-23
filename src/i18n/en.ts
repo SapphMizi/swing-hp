@@ -1,100 +1,100 @@
 export const en = {
   translation: {
-    // Nav
     nav: {
       home: 'Home',
-      about: 'About Us',
+      about: 'About',
       history: 'History',
       schedule: 'Schedule',
+      news: 'News',
       liveReports: 'Live Reports',
       contact: 'Contact',
+      menu: 'Menu',
+      close: 'Close',
+      lang: '日本語',
+      langLabel: 'Switch to Japanese',
     },
 
-    // Common
-    readMore: 'Read More',
-    backToTop: 'Back to Top',
+    common: {
+      more: 'See all',
+      backToList: 'Back to list',
+      bands: 'Bands',
+    },
 
-    // Loading
     loading: {
-      tagline: 'All you need is Jazz',
+      skip: 'Click to skip',
     },
 
-    // Home
     home: {
-      heroTitle: 'Osaka University',
-      heroName: 'SWING',
-      heroSub: 'Est. 1962. Playing jazz with everyone who loves it, from Toyonaka Campus.',
-      ctaSchedule: 'See Schedule',
-      ctaAbout: 'About Us',
-      aboutTitle: 'About Us',
-      aboutText:
-        'SWING is an authorized club at Osaka University, based in "Meidokan" on Toyonaka Campus. We perform jazz in various styles, from big bands to small combos.',
-      bandsTitle: 'Our Bands',
-      joinTitle: 'Join Us',
-      joinText: 'No prior experience required. Feel free to reach out to us anytime.',
-      joinCta: 'Contact Us',
+      heroCopy:
+        'Founded in 1962. Three big bands play jazz at Meidokan on Osaka University’s Toyonaka Campus.',
+      ctaJoin: 'Visit or join',
+      ctaSchedule: 'Schedule',
+      heroPhotoAlt: 'SWING playing live',
+      newsLabel: 'News',
+      newsEmpty: 'No news yet.',
+      bandsLabel: 'Our bands',
+      reportsLabel: 'Live reports',
+      reportsEmpty: 'No live reports yet.',
+      joinLabel: 'Join us',
+      joinText:
+        'No experience needed. New members start out in Blue Spirits Jazz Orchestra. To visit a rehearsal, send a DM to one of the bands or email us.',
+      joinCta: 'How to reach us',
+      joinNote: 'Come and visit first',
     },
 
-    // Bands
-    bands: {
-      dgun: {
-        name: 'D-gun',
-        desc: 'The big band that all new members join. Learn jazz step by step with guidance from senior members.',
-      },
-      sao: {
-        name: 'Swing Arcade Orchestra',
-        desc: 'A band that takes on all genres, centered on funk and fusion. Members stay together for one full year.',
-      },
-      tnwjo: {
-        name: 'The New Wave Jazz Orchestra',
-        desc: 'A band dedicated exclusively to the music of jazz legend Count Basie. Members stay together for one full year.',
-      },
-    },
-
-    // About
     about: {
-      title: 'About Us',
-      subtitle: 'About Us',
+      label: 'About',
       intro:
         'SWING is an authorized light music club at Osaka University, based in "Meidokan" on Toyonaka Campus.',
-      activity: 'Activities',
+      activityTitle: 'Activities',
       activityText:
         'We hold regular weekly practices and perform at concerts both on and off campus. Annual highlights include our regular concert and the welcome live for new students.',
+      placeTitle: 'Where we play',
+      placeText: 'Meidokan, Toyonaka Campus, Osaka University',
     },
 
-    // History
     history: {
-      title: 'History of SWING',
-      subtitle: 'History',
-      since: 'Founded',
+      label: 'History',
     },
 
-    // Schedule
     schedule: {
-      title: 'Schedule',
-      subtitle: 'Schedule',
-      noEvents: 'No events in this period.',
-      loading: 'Loading...',
+      label: 'Schedule',
+      preparing:
+        'We are preparing to publish our Google Calendar here. Until then, check each band’s social accounts for upcoming lives.',
+      toContact: 'Band accounts',
     },
 
-    // Live Reports
+    news: {
+      label: 'News',
+      empty: 'No news yet.',
+      notFound: 'This post could not be found.',
+    },
+
     liveReports: {
-      title: 'Live Reports',
-      subtitle: 'Live Reports',
+      label: 'Live reports',
+      empty: 'No live reports for this year yet.',
+      all: 'All',
+      notFound: 'This live report could not be found.',
     },
 
-    // Contact
     contact: {
-      title: 'Contact',
-      subtitle: 'Contact',
+      label: 'Contact',
       intro:
-        'For inquiries about joining, attending rehearsals, or booking a performance, reach out via SNS or email below.',
-      emailNote: 'For performance requests, please include the name of the band you wish to hire.',
+        'For joining, visiting a rehearsal, or booking a band, send a DM to one of the bands or email us.',
+      mailTitle: 'Email',
+      emailNote:
+        'For booking requests, please include the name of the band you would like to book.',
+      unset: 'Coming soon',
+      snsTitle: 'Band accounts',
     },
 
-    // Footer
+    notFound: {
+      text: 'We could not find that page. It may have moved or been removed.',
+      home: 'Back to home',
+    },
+
     footer: {
-      copy: 'Osaka University Light Music Club SWING',
+      name: 'SWING, Osaka University Light Music Club',
       tagline: 'All you need is Jazz',
     },
   },

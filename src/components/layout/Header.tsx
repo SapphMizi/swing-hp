@@ -1,130 +1,149 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { gsap } from 'gsap'
+import { Menu, X } from 'lucide-react'
 
+// en は鍵盤に載せる英語のラベル。日本語表示のときは、その下に日本語を添える
 const NAV_LINKS = [
-  { key: 'nav.about', to: '/about' },
-  { key: 'nav.history', to: '/history' },
-  { key: 'nav.schedule', to: '/schedule' },
-  { key: 'nav.liveReports', to: '/live-reports' },
-  { key: 'nav.contact', to: '/contact' },
+  { key: 'nav.about', en: 'About', to: '/about' },
+  { key: 'nav.news', en: 'News', to: '/news' },
+  { key: 'nav.liveReports', en: 'Live', to: '/live-reports' },
+  { key: 'nav.schedule', en: 'Schedule', to: '/schedule' },
+  { key: 'nav.history', en: 'History', to: '/history' },
+  { key: 'nav.contact', en: 'Contact', to: '/contact' },
 ] as const
+
+// 黒鍵が右隣に付く鍵盤の位置(ドレミファソラシのうち、ミとシの右には黒鍵がない)
+const HAS_BLACK_KEY = [true, true, false, true, true, false]
 
 export function Header() {
   const { t, i18n } = useTranslation()
-  const [scrolled, setScrolled] = useState(false)
+  const isJa = i18n.language === 'ja'
   const [menuOpen, setMenuOpen] = useState(false)
-  const headerRef = useRef<HTMLElement>(null)
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+
+  useEffect(() => setMenuOpen(false), [pathname])
 
   const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === 'ja' ? 'en' : 'ja')
+    const next = isJa ? 'en' : 'ja'
+    i18n.changeLanguage(next)
+    document.documentElement.lang = next
   }
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  // Animate in on mount
-  useEffect(() => {
-    gsap.fromTo(
-      headerRef.current,
-      { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', delay: 0.2 },
-    )
-  }, [])
-
   return (
-    <header
-      ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-swing-black/90 backdrop-blur-md border-b border-swing-amber/10 py-3'
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
+    <header className="sticky top-0 z-40 border-b-2 border-ink bg-paper">
+      <div className="mx-auto flex max-w-7xl items-stretch justify-between gap-4 px-4 sm:px-6">
+        <Link
+          to="/"
+          className="flex items-center gap-3 py-3 text-ink no-underline"
+        >
           <img
-            src="/images/swing_logo.jpg"
-            alt="SWING"
-            className="h-9 w-9 rounded-full object-cover"
+            src="/images/hand/chara.webp"
+            alt=""
+            width={44}
+            height={45}
+            className="h-11 w-auto"
           />
-          <div>
-            <span className="block font-bold text-swing-cream text-lg leading-none tracking-wide group-hover:text-swing-amber transition-colors duration-300">
+          <span className="leading-none">
+            <span
+              className="block text-[1.7rem] font-black tracking-[0.02em]"
+              lang="en"
+            >
               SWING
             </span>
-            <span className="block text-swing-warm-gray text-[10px] tracking-widest uppercase leading-none mt-0.5">
-              Osaka Univ.
+            <span className="mt-1 block text-[0.8rem] font-bold">
+              {isJa ? '大阪大学 軽音楽部' : 'Osaka Univ. Light Music Club'}
             </span>
-          </div>
+          </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map(({ key, to }) => (
-            <Link
-              key={to}
-              to={to}
-              className="px-4 py-2 text-sm text-swing-warm-gray-light hover:text-swing-amber tracking-wide transition-colors duration-200 relative group"
-              activeProps={{ className: 'text-swing-amber' }}
+        <div className="flex items-start gap-3">
+          <nav aria-label={t('nav.menu')} className="hidden lg:block">
+            <ul className="flex">
+              {NAV_LINKS.map(({ key, en, to }, i) => (
+                <li key={to} className="relative -ml-[2px] first:ml-0">
+                  <Link
+                    to={to}
+                    className="flex h-[4.6rem] w-[6.4rem] flex-col items-center justify-end rounded-b-xl border-2 border-t-0 border-ink bg-paper-light pb-2 leading-tight text-ink no-underline shadow-[0_3px_0_0_var(--color-ink)] transition-[translate,box-shadow,background-color] duration-100 hover:translate-y-[3px] hover:shadow-none focus-visible:translate-y-[3px] focus-visible:shadow-none"
+                    activeProps={{
+                      className: 'bg-yellow',
+                      'aria-current': 'page',
+                    }}
+                  >
+                    <span className="text-[0.95rem] font-black" lang="en">
+                      {en}
+                    </span>
+                    {isJa && (
+                      <span className="text-xs font-bold">{t(key)}</span>
+                    )}
+                  </Link>
+                  {HAS_BLACK_KEY[i] && i < NAV_LINKS.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -right-[9px] top-0 z-10 h-[2.4rem] w-4 rounded-b-md bg-ink"
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="flex items-center gap-2 self-center">
+            <button
+              type="button"
+              onClick={toggleLang}
+              aria-label={t('nav.langLabel')}
+              className="min-h-11 rounded-full border-2 border-ink bg-paper-light px-4 text-sm font-bold text-ink transition-colors duration-150 hover:bg-yellow"
             >
-              {t(key)}
-              <span className="absolute bottom-0 left-4 right-4 h-px bg-swing-amber scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-            </Link>
-          ))}
-        </nav>
-
-        {/* Lang toggle + Hamburger */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={toggleLang}
-            className="text-xs text-swing-warm-gray border border-swing-amber/20 px-3 py-1.5 rounded-full hover:border-swing-amber/60 hover:text-swing-amber transition-all duration-200 tracking-widest"
-          >
-            {i18n.language === 'ja' ? 'EN' : 'JA'}
-          </button>
-
-          {/* Hamburger */}
-          <button
-            className="md:hidden flex flex-col gap-[5px] p-1"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="menu"
-          >
-            <span
-              className={`block h-[1.5px] w-6 bg-swing-cream transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`}
-            />
-            <span
-              className={`block h-[1.5px] w-6 bg-swing-cream transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}
-            />
-            <span
-              className={`block h-[1.5px] w-6 bg-swing-cream transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`}
-            />
-          </button>
+              {t('nav.lang')}
+            </button>
+            <button
+              type="button"
+              className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink bg-paper-light text-ink lg:hidden"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? t('nav.close') : t('nav.menu')}
+            >
+              {menuOpen ? (
+                <X aria-hidden size={22} />
+              ) : (
+                <Menu aria-hidden size={22} />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ${
-          menuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+      <nav
+        id="mobile-menu"
+        aria-label={t('nav.menu')}
+        hidden={!menuOpen}
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b-2 border-ink bg-paper-light lg:hidden"
       >
-        <nav className="flex flex-col bg-swing-black/95 backdrop-blur-md border-t border-swing-amber/10 px-6 py-4 gap-1">
-          {NAV_LINKS.map(({ key, to }) => (
-            <Link
+        <ul className="mx-auto max-w-7xl px-4 py-2 sm:px-6">
+          {NAV_LINKS.map(({ key, en, to }) => (
+            <li
               key={to}
-              to={to}
-              onClick={() => setMenuOpen(false)}
-              className="py-3 text-swing-warm-gray-light hover:text-swing-amber text-sm tracking-wide border-b border-white/5 transition-colors duration-200"
+              className="border-b-2 border-dashed border-ink/30 last:border-b-0"
             >
-              {t(key)}
-            </Link>
+              <Link
+                to={to}
+                className="flex min-h-14 items-baseline gap-3 text-ink no-underline"
+                activeProps={{
+                  'aria-current': 'page',
+                  className: 'text-pink-deep',
+                }}
+              >
+                <span className="text-xl font-black" lang="en">
+                  {en}
+                </span>
+                {isJa && <span className="text-sm font-bold">{t(key)}</span>}
+              </Link>
+            </li>
           ))}
-        </nav>
-      </div>
+        </ul>
+      </nav>
     </header>
   )
 }

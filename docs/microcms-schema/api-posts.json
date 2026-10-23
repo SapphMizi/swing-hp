@@ -1,0 +1,92 @@
+{
+  "apiFields": [
+    {
+      "idValue": "eb909584e2",
+      "fieldId": "category",
+      "name": "種類",
+      "kind": "select",
+      "required": true,
+      "selectItems": [
+        {
+          "id": "42b095ed",
+          "value": "お知らせ"
+        },
+        {
+          "id": "fce358f5",
+          "value": "ライブレポート"
+        }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
+    },
+    {
+      "idValue": "afa2465df1",
+      "fieldId": "title",
+      "name": "タイトル",
+      "kind": "text",
+      "required": true,
+      "isUnique": false
+    },
+    {
+      "idValue": "e30ab90118",
+      "fieldId": "eventDate",
+      "name": "日付（ライブの日、またはお知らせの日）",
+      "kind": "date",
+      "required": true,
+      "dateFormat": true
+    },
+    {
+      "idValue": "72a7979c87",
+      "fieldId": "eyecatch",
+      "name": "写真（一覧とページの上に出る）",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "idValue": "7a9dbfb854",
+      "fieldId": "body",
+      "name": "本文",
+      "kind": "richEditorV2",
+      "required": true
+    },
+    {
+      "idValue": "af70c3a065",
+      "fieldId": "bands",
+      "name": "出演したバンド（ライブレポートのみ）",
+      "kind": "select",
+      "required": false,
+      "selectItems": [
+        {
+          "id": "d1692230",
+          "value": "Blue Spirits Jazz Orchestra"
+        },
+        {
+          "id": "2eacbe30",
+          "value": "Swing Arcade Orchestra"
+        },
+        {
+          "id": "fe9975bc",
+          "value": "The New Wave Jazz Orchestra"
+        }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": true
+    },
+    {
+      "idValue": "3d051ffb41",
+      "fieldId": "title_en",
+      "name": "タイトル（英語・任意）",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "abb4521a33",
+      "fieldId": "body_en",
+      "name": "本文（英語・任意）",
+      "kind": "richEditorV2",
+      "required": false
+    }
+  ],
+  "customFields": []
+}

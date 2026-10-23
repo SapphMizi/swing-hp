@@ -1,0 +1,28 @@
+{
+  "apiFields": [
+    {
+      "idValue": "82d1ced768",
+      "fieldId": "year",
+      "name": "年",
+      "kind": "number",
+      "required": true
+    },
+    {
+      "idValue": "94ddfe9a89",
+      "fieldId": "text",
+      "name": "出来事",
+      "kind": "text",
+      "required": true,
+      "isUnique": false
+    },
+    {
+      "idValue": "5a482c6aeb",
+      "fieldId": "text_en",
+      "name": "出来事（英語・任意）",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    }
+  ],
+  "customFields": []
+}

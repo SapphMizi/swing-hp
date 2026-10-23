@@ -1,99 +1,149 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useRef } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Hero } from '../components/home/Hero'
-import { BandCard } from '../components/home/BandCard'
-import { SectionTitle } from '../components/ui/SectionTitle'
+import { NewsList } from '../components/home/NewsList'
+import { BandSheets } from '../components/home/BandSheets'
+import { ReportGrid } from '../components/home/ReportGrid'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { ButtonLink } from '../components/ui/ButtonLink'
+import { TornEdge } from '../components/ui/TornEdge'
+import { bandsQuery, postsQuery, siteQuery } from '../lib/queries'
 
-gsap.registerPlugin(ScrollTrigger)
+export const Route = createFileRoute('/')({
+  loader: ({ context: { queryClient } }) =>
+    Promise.all([
+      queryClient.ensureQueryData(siteQuery()),
+      queryClient.ensureQueryData(postsQuery('news', { limit: 3 })),
+      queryClient.ensureQueryData(postsQuery('live-report', { limit: 3 })),
+      queryClient.ensureQueryData(bandsQuery()),
+    ]),
+  component: Home,
+})
 
-export const Route = createFileRoute('/')({ component: Home })
-
-const BANDS_DATA = [
-  { key: 'bands.dgun', instagram: undefined, twitter: undefined },
-  { key: 'bands.sao', instagram: undefined, twitter: undefined },
-  { key: 'bands.tnwjo', instagram: undefined, twitter: undefined },
-] as const
+function MoreLink({
+  to,
+  children,
+}: {
+  to: '/news' | '/live-reports'
+  children: string
+}) {
+  return (
+    <Link
+      to={to}
+      className="group inline-flex min-h-11 items-center gap-2 font-bold text-pink-deep"
+    >
+      {children}
+      <ArrowRight
+        aria-hidden
+        size={18}
+        strokeWidth={2.5}
+        className="transition-transform duration-150 group-hover:translate-x-1"
+      />
+    </Link>
+  )
+}
 
 function Home() {
   const { t } = useTranslation()
-  const joinRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const el = joinRef.current
-    if (!el) return
-    gsap.fromTo(
-      el,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        ease: 'expo.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      },
-    )
-  }, [])
+  const { data: site } = useSuspenseQuery(siteQuery())
+  const { data: news } = useSuspenseQuery(postsQuery('news', { limit: 3 }))
+  const { data: reports } = useSuspenseQuery(
+    postsQuery('live-report', { limit: 3 }),
+  )
+  const { data: bands } = useSuspenseQuery(bandsQuery())
 
   return (
     <main>
-      <Hero />
+      <Hero site={site} />
 
-      {/* About intro section */}
-      <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto">
-        <SectionTitle subtitle="About" title={t('home.aboutTitle')} />
-        <p className="text-swing-warm-gray-light leading-loose max-w-2xl text-base md:text-lg">
-          {t('home.aboutText')}
-        </p>
-      </section>
-
-      {/* Bands section */}
-      <section className="py-16 px-8 md:px-16 max-w-7xl mx-auto">
-        <SectionTitle subtitle="Our Bands" title={t('home.bandsTitle')} />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {BANDS_DATA.map(({ key }, i) => (
-            <BandCard
-              key={key}
-              name={t(`${key}.name`)}
-              desc={t(`${key}.desc`)}
-              index={i}
-            />
-          ))}
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
+        <SectionHeading en="News" ja={t('home.newsLabel')} />
+        <div>
+          <NewsList posts={news.contents} emptyText={t('home.newsEmpty')} />
+          {news.totalCount > 3 && (
+            <div className="mt-6 text-right">
+              <MoreLink to="/news">{t('common.more')}</MoreLink>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Divider stripe */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-swing-amber/20 to-transparent my-8" />
+      <section>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SectionHeading
+            en="Our Bands"
+            ja={t('home.bandsLabel')}
+            className="!mb-12"
+          />
+        </div>
+        <BandSheets bands={bands} />
+      </section>
 
-      {/* Join section */}
-      <section
-        ref={joinRef}
-        className="py-24 px-8 md:px-16 text-center max-w-3xl mx-auto opacity-0"
-      >
-        <p className="font-mono text-swing-amber text-xs tracking-[0.45em] uppercase mb-4">
-          Join Us
-        </p>
-        <h2
-          className="text-swing-cream font-bold mb-6"
-          style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
-        >
-          {t('home.joinTitle')}
-        </h2>
-        <p className="text-swing-warm-gray-light leading-relaxed mb-10 text-base md:text-lg">
-          {t('home.joinText')}
-        </p>
-        <Link
-          to="/contact"
-          className="inline-flex items-center gap-2 bg-swing-amber text-swing-black font-bold px-8 py-4 rounded-full hover:bg-swing-amber-light transition-colors duration-200 tracking-wide"
-        >
-          {t('home.joinCta')}
-        </Link>
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHeading en="Live Reports" ja={t('home.reportsLabel')} />
+          {reports.totalCount > 3 && (
+            <div className="mb-14 hidden md:block">
+              <MoreLink to="/live-reports">{t('common.more')}</MoreLink>
+            </div>
+          )}
+        </div>
+        <ReportGrid
+          posts={reports.contents}
+          emptyText={t('home.reportsEmpty')}
+        />
+        {reports.totalCount > 3 && (
+          <div className="mt-8 text-right md:hidden">
+            <MoreLink to="/live-reports">{t('common.more')}</MoreLink>
+          </div>
+        )}
+      </section>
+
+      <section className="relative bg-ink text-paper-light">
+        <TornEdge className="bg-ink" />
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 md:py-24 lg:grid-cols-[3fr_2fr]">
+          <div>
+            <SectionHeading
+              en="Join Us"
+              ja={t('home.joinLabel')}
+              tone="paper"
+            />
+            <p className="max-w-[40ch] text-lg leading-relaxed">
+              {t('home.joinText')}
+            </p>
+            <div className="mt-8">
+              <ButtonLink to="/contact" variant="secondary">
+                {t('home.joinCta')}
+              </ButtonLink>
+            </div>
+          </div>
+          <div
+            className="relative mx-auto w-full max-w-[380px] bg-paper px-6 pb-4 pt-8 shadow-[0_18px_30px_-16px_rgba(0,0,0,0.6)]"
+            style={{ rotate: '3deg' }}
+          >
+            <img
+              src="/images/hand/bubble.webp"
+              alt=""
+              width={314}
+              height={134}
+              loading="lazy"
+              className="ml-auto w-[78%]"
+            />
+            <img
+              src="/images/hand/chara.webp"
+              alt=""
+              width={323}
+              height={328}
+              loading="lazy"
+              className="-mt-6 w-[42%]"
+            />
+            <p className="absolute bottom-6 right-6 font-hand text-xl text-ink">
+              {t('home.joinNote')}
+            </p>
+          </div>
+        </div>
       </section>
     </main>
   )

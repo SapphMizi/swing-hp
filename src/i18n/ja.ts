@@ -1,100 +1,99 @@
 export const ja = {
   translation: {
-    // Nav
     nav: {
       home: 'ホーム',
       about: '部について',
       history: '歴史',
       schedule: 'スケジュール',
+      news: 'お知らせ',
       liveReports: 'ライブレポート',
-      contact: 'コンタクト',
+      contact: '見学・連絡',
+      menu: 'メニュー',
+      close: '閉じる',
+      lang: 'English',
+      langLabel: '英語に切り替える',
     },
 
-    // Common
-    readMore: '続きを読む',
-    backToTop: 'トップへ',
+    common: {
+      more: 'もっと見る',
+      backToList: '一覧へ戻る',
+      bands: 'バンド',
+    },
 
-    // Loading
     loading: {
-      tagline: 'All you need is Jazz',
+      skip: 'クリックで飛ばせます',
     },
 
-    // Home
     home: {
-      heroTitle: '大阪大学 軽音楽部',
-      heroName: 'SWING',
-      heroSub: '1962年創部。豊中キャンパスを拠点に、ジャズを愛するすべての人とともに。',
-      ctaSchedule: 'スケジュールを見る',
-      ctaAbout: '部について知る',
-      aboutTitle: '私たちについて',
-      aboutText:
-        '大阪大学軽音楽部SWINGは、豊中キャンパス内の「明道館」を拠点に活動する公認部活動です。ビッグバンドからコンボまで、多様なスタイルでジャズを演奏しています。',
-      bandsTitle: '所属バンド',
-      joinTitle: '入部案内',
-      joinText: '楽器経験の有無は問いません。お気軽にお問い合わせください。',
-      joinCta: 'お問い合わせ',
+      heroCopy:
+        '1962年創部。豊中キャンパスの明道館で、3つのビッグバンドがジャズを演奏しています。',
+      ctaJoin: '見学・入部の案内',
+      ctaSchedule: 'スケジュール',
+      heroPhotoAlt: 'SWING のライブの様子',
+      newsLabel: 'お知らせ',
+      newsEmpty: 'まだお知らせはありません。',
+      bandsLabel: '所属バンド',
+      reportsLabel: 'ライブレポート',
+      reportsEmpty: 'まだライブレポートはありません。',
+      joinLabel: '入部案内',
+      joinText:
+        '楽器の経験は問いません。入部した部員は、まず Blue Spirits Jazz Orchestra で演奏します。見学したい人は、各バンドの SNS の DM かメールで連絡してください。',
+      joinCta: '連絡先を見る',
+      joinNote: 'まずは見学から',
     },
 
-    // Bands
-    bands: {
-      dgun: {
-        name: 'D軍',
-        desc: '入部した部員が加入するビッグバンドです。先輩に教わりながら、ジャズを楽しんでいきます。',
-      },
-      sao: {
-        name: 'Swing Arcade Orchestra',
-        desc: 'ファンクやフュージョンを中心に、オールジャンルに挑戦するバンドです。1年間同じメンバーで活動します。',
-      },
-      tnwjo: {
-        name: 'The New Wave Jazz Orchestra',
-        desc: 'ジャズの巨匠カウント・ベイシーの楽曲のみを演奏するバンドです。1年間同じメンバーで活動します。',
-      },
-    },
-
-    // About
     about: {
-      title: '部について',
-      subtitle: 'About Us',
+      label: '部について',
       intro:
         '大阪大学軽音楽部SWINGは大阪大学公認の軽音楽部で、豊中キャンパス内の「明道館」を拠点に活動しています。',
-      activity: '活動内容',
+      activityTitle: '活動内容',
       activityText:
         '毎週定期的に練習を行い、学内外でのライブ演奏に向けて技術を磨いています。定期演奏会・新歓ライブなど年間を通じて多彩な演奏機会があります。',
+      placeTitle: '活動場所',
+      placeText: '大阪大学 豊中キャンパス 明道館',
     },
 
-    // History
     history: {
-      title: 'SWINGの歴史',
-      subtitle: 'History',
-      since: '創部',
+      label: 'SWINGの歴史',
     },
 
-    // Schedule
     schedule: {
-      title: 'スケジュール',
-      subtitle: 'Schedule',
-      noEvents: 'この期間のイベントはありません。',
-      loading: '読み込み中...',
+      label: 'スケジュール',
+      preparing:
+        'Google カレンダーの掲載を準備しています。それまでは、各バンドの SNS でライブの予定を確認してください。',
+      toContact: '各バンドの SNS',
     },
 
-    // Live Reports
+    news: {
+      label: 'お知らせ',
+      empty: 'まだお知らせはありません。',
+      notFound: 'この記事は見つかりませんでした。',
+    },
+
     liveReports: {
-      title: 'ライブレポート',
-      subtitle: 'Live Reports',
+      label: 'ライブレポート',
+      empty: 'この年のライブレポートはまだありません。',
+      all: 'すべて',
+      notFound: 'このライブレポートは見つかりませんでした。',
     },
 
-    // Contact
     contact: {
-      title: 'コンタクト',
-      subtitle: 'Contact',
+      label: '見学・連絡',
       intro:
-        '入部希望・見学希望の方、依頼演奏等については下記SNSのDMまたはメールにてご連絡ください。',
-      emailNote: '依頼演奏の際は「依頼するバンド名」を本文に必ずご記載ください。',
+        '入部や見学の希望、依頼演奏のご相談は、各バンドの SNS の DM かメールで受け付けています。',
+      mailTitle: 'メール',
+      emailNote: '依頼演奏の場合は、依頼するバンド名を本文に書いてください。',
+      unset: '準備中です',
+      snsTitle: '各バンドの SNS',
     },
 
-    // Footer
+    notFound: {
+      text: 'お探しのページは見つかりませんでした。URL が変わったか、削除された可能性があります。',
+      home: 'トップへ戻る',
+    },
+
     footer: {
-      copy: '大阪大学 軽音楽部 SWING',
+      name: '大阪大学 軽音楽部 SWING',
       tagline: 'All you need is Jazz',
     },
   },

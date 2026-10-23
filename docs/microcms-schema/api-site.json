@@ -1,0 +1,52 @@
+{
+  "apiFields": [
+    {
+      "idValue": "ec2a358b42",
+      "fieldId": "heroImages",
+      "name": "トップの写真（最大5枚。1枚目が最初に出る）",
+      "kind": "mediaList",
+      "required": false
+    },
+    {
+      "idValue": "280d69cee0",
+      "fieldId": "heroCopy",
+      "name": "トップの紹介文（空なら既定の文）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "823178f2ca",
+      "fieldId": "heroCopy_en",
+      "name": "トップの紹介文（英語・任意）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "db0b09cf46",
+      "fieldId": "email",
+      "name": "部のメールアドレス",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "07b7feec69",
+      "fieldId": "instagram",
+      "name": "部の Instagram の URL",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "318ccf74a5",
+      "fieldId": "x",
+      "name": "部の X の URL",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    }
+  ],
+  "customFields": []
+}

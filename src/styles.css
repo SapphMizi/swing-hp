@@ -1,55 +1,113 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
+/* 色はすべて部の SNS アイコン(桃色の紙に色鉛筆)から取っている。docs/requirements.md の 2 章を参照 */
 @theme {
-  --color-swing-black: #0c0805;
-  --color-swing-deep: #1a1208;
-  --color-swing-amber: #f2bf80;
-  --color-swing-amber-light: #f7d9aa;
-  --color-swing-coral: #d45a30;
-  --color-swing-cream: #f5ecd7;
-  --color-swing-warm-gray: #8c7b6a;
-  --color-swing-warm-gray-light: #b5a898;
+  --color-paper: #fbdcc0;
+  --color-paper-light: #fdeee1;
+  --color-ink: #2b1d1f;
+  --color-ink-soft: #5a4446;
+  --color-pink: #e0456f;
+  --color-pink-deep: #b0304f;
+  --color-blue: #3f6f96;
+  --color-blue-deep: #355f82;
+  --color-teal: #7abdc5;
+  --color-orange: #f0904a;
+  --color-yellow: #fbd96e;
+  --color-green: #8fb85a;
+  /* バンドのテーマカラー。アイコンの N の赤と、鍵盤の紺から取った */
+  --color-red: #ea5a48;
+  --color-navy: #23365e;
 
-  --font-sans: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+  --font-hand: 'Klee One', 'Zen Maru Gothic', sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#app {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: var(--color-ink-soft) var(--color-paper);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background-color: var(--color-swing-black);
-  color: var(--color-swing-cream);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 1.8;
   overflow-x: hidden;
+  font-feature-settings: 'palt' 0;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-swing-deep);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-swing-amber);
-  border-radius: 3px;
-}
-
-/* Selection */
 ::selection {
-  background: var(--color-swing-amber);
-  color: var(--color-swing-black);
+  background: var(--color-yellow);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  /* 青や紺の面の上でも見えるよう、黄色の縁取りを付ける */
+  outline: 3px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-yellow);
+}
+
+a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 2px;
+}
+
+time,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ローディング画面。SSR の HTML に最初から含め、head のスクリプトが
+   html[data-intro] を付けたときだけ見せる(ハイドレーション前のちらつきを防ぐ) */
+.intro-cover {
+  display: none;
+}
+html[data-intro] .intro-cover {
+  display: flex;
+  /* JavaScript が動かなかったときも、4 秒で覆いを外す */
+  animation: intro-failsafe 0s 4s forwards;
+}
+html[data-intro] body {
+  overflow: hidden;
+  animation: intro-unlock 0s 4s forwards;
+}
+@keyframes intro-failsafe {
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes intro-unlock {
+  to {
+    overflow: auto;
+  }
+}
+
+/* 日本語を文節で折り返し、単語の途中(明/道館、ジ/ャズ)で改行しない */
+:lang(ja) {
+  word-break: auto-phrase;
+  line-break: strict;
+}
+p,
+li,
+dd {
+  text-wrap: pretty;
 }
