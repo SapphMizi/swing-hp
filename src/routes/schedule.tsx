@@ -1,23 +1,36 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { SectionTitle } from '../components/ui/SectionTitle'
+import { Page } from '../components/layout/Page'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { ButtonLink } from '../components/ui/ButtonLink'
 
-export const Route = createFileRoute('/schedule')({ component: Schedule })
+export const Route = createFileRoute('/schedule')({
+  head: () => ({ meta: [{ title: 'スケジュール | 大阪大学 軽音楽部 SWING' }] }),
+  component: Schedule,
+})
 
 function Schedule() {
   const { t } = useTranslation()
   return (
-    <main className="pt-32 pb-24 px-8 md:px-16 max-w-4xl mx-auto">
-      <SectionTitle subtitle={t('schedule.subtitle')} title={t('schedule.title')} />
-      <div className="mt-8 rounded-2xl border border-swing-amber/10 bg-swing-deep p-10 text-center">
-        <p className="text-swing-amber font-mono text-xs tracking-[0.4em] uppercase mb-3">
-          Coming Soon
-        </p>
-        <p className="text-swing-warm-gray text-sm leading-relaxed">
-          Google カレンダー連携を準備中です。<br />
-          各バンドのライブ情報は SNS でご確認ください。
+    <Page narrow>
+      <SectionHeading as="h1" en="Schedule" ja={t('schedule.label')} />
+      <div
+        className="relative max-w-xl bg-yellow p-8 shadow-[0_10px_18px_-10px_rgba(43,29,31,0.5)]"
+        style={{ rotate: '-1.5deg' }}
+      >
+        <span
+          aria-hidden
+          className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-2 bg-pink/70 mix-blend-multiply"
+        />
+        <p className="text-lg font-bold leading-relaxed">
+          {t('schedule.preparing')}
         </p>
       </div>
-    </main>
+      <div className="mt-10">
+        <ButtonLink to="/contact" variant="secondary">
+          {t('schedule.toContact')}
+        </ButtonLink>
+      </div>
+    </Page>
   )
 }

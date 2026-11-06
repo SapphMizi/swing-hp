@@ -10,20 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ScheduleRouteImport } from './routes/schedule'
-import { Route as LiveReportsRouteImport } from './routes/live-reports'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as LiveReportsIndexRouteImport } from './routes/live-reports.index'
+import { Route as NewsIdRouteImport } from './routes/news.$id'
+import { Route as LiveReportsIdRouteImport } from './routes/live-reports.$id'
 
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LiveReportsRoute = LiveReportsRouteImport.update({
-  id: '/live-reports',
-  path: '/live-reports',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoryRoute = HistoryRouteImport.update({
@@ -46,22 +44,48 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/news/',
+  path: '/news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LiveReportsIndexRoute = LiveReportsIndexRouteImport.update({
+  id: '/live-reports/',
+  path: '/live-reports/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsIdRoute = NewsIdRouteImport.update({
+  id: '/news/$id',
+  path: '/news/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LiveReportsIdRoute = LiveReportsIdRouteImport.update({
+  id: '/live-reports/$id',
+  path: '/live-reports/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/history': typeof HistoryRoute
-  '/live-reports': typeof LiveReportsRoute
   '/schedule': typeof ScheduleRoute
+  '/live-reports/$id': typeof LiveReportsIdRoute
+  '/news/$id': typeof NewsIdRoute
+  '/live-reports/': typeof LiveReportsIndexRoute
+  '/news/': typeof NewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/history': typeof HistoryRoute
-  '/live-reports': typeof LiveReportsRoute
   '/schedule': typeof ScheduleRoute
+  '/live-reports/$id': typeof LiveReportsIdRoute
+  '/news/$id': typeof NewsIdRoute
+  '/live-reports': typeof LiveReportsIndexRoute
+  '/news': typeof NewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +93,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/history': typeof HistoryRoute
-  '/live-reports': typeof LiveReportsRoute
   '/schedule': typeof ScheduleRoute
+  '/live-reports/$id': typeof LiveReportsIdRoute
+  '/news/$id': typeof NewsIdRoute
+  '/live-reports/': typeof LiveReportsIndexRoute
+  '/news/': typeof NewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,18 +106,33 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/history'
-    | '/live-reports'
     | '/schedule'
+    | '/live-reports/$id'
+    | '/news/$id'
+    | '/live-reports/'
+    | '/news/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/history' | '/live-reports' | '/schedule'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/history'
+    | '/schedule'
+    | '/live-reports/$id'
+    | '/news/$id'
+    | '/live-reports'
+    | '/news'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
     | '/history'
-    | '/live-reports'
     | '/schedule'
+    | '/live-reports/$id'
+    | '/news/$id'
+    | '/live-reports/'
+    | '/news/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,8 +140,11 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   HistoryRoute: typeof HistoryRoute
-  LiveReportsRoute: typeof LiveReportsRoute
   ScheduleRoute: typeof ScheduleRoute
+  LiveReportsIdRoute: typeof LiveReportsIdRoute
+  NewsIdRoute: typeof NewsIdRoute
+  LiveReportsIndexRoute: typeof LiveReportsIndexRoute
+  NewsIndexRoute: typeof NewsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -109,13 +154,6 @@ declare module '@tanstack/react-router' {
       path: '/schedule'
       fullPath: '/schedule'
       preLoaderRoute: typeof ScheduleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/live-reports': {
-      id: '/live-reports'
-      path: '/live-reports'
-      fullPath: '/live-reports'
-      preLoaderRoute: typeof LiveReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/history': {
@@ -146,6 +184,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news/': {
+      id: '/news/'
+      path: '/news'
+      fullPath: '/news/'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/live-reports/': {
+      id: '/live-reports/'
+      path: '/live-reports'
+      fullPath: '/live-reports/'
+      preLoaderRoute: typeof LiveReportsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news/$id': {
+      id: '/news/$id'
+      path: '/news/$id'
+      fullPath: '/news/$id'
+      preLoaderRoute: typeof NewsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/live-reports/$id': {
+      id: '/live-reports/$id'
+      path: '/live-reports/$id'
+      fullPath: '/live-reports/$id'
+      preLoaderRoute: typeof LiveReportsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -154,8 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   HistoryRoute: HistoryRoute,
-  LiveReportsRoute: LiveReportsRoute,
   ScheduleRoute: ScheduleRoute,
+  LiveReportsIdRoute: LiveReportsIdRoute,
+  NewsIdRoute: NewsIdRoute,
+  LiveReportsIndexRoute: LiveReportsIndexRoute,
+  NewsIndexRoute: NewsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

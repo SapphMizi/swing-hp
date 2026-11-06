@@ -1,116 +1,101 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { gsap } from 'gsap'
+import { Keys } from '../ui/Keys'
 
-interface LoadingScreenProps {
-  onComplete: () => void
-}
+export const INTRO_STORAGE_KEY = 'swing_loaded'
 
-export function LoadingScreen({ onComplete }: LoadingScreenProps) {
-  const overlayRef = useRef<HTMLDivElement>(null)
-  const barFillRef = useRef<HTMLDivElement>(null)
+// ブラウザのセッションで最初に開いたときだけ出す。
+// 出すかどうかは __root.tsx の head のスクリプトが html[data-intro] で決める。
+// 鍵盤の上をキャラクターが歩き、その間にロゴが左から描かれていく(1.4 秒)。
+export function LoadingScreen() {
+  const { t } = useTranslation()
+  const coverRef = useRef<HTMLDivElement>(null)
   const charaRef = useRef<HTMLImageElement>(null)
-  const countRef = useRef<HTMLSpanElement>(null)
-  const [progress, setProgress] = useState(0)
+  const logoRef = useRef<HTMLImageElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const tlRef = useRef<gsap.core.Timeline | null>(null)
 
   useEffect(() => {
-    const counter = { val: 0 }
-    const tl = gsap.timeline()
+    const root = document.documentElement
+    if (!('intro' in root.dataset)) return
 
-    tl.to(counter, {
-      val: 100,
-      duration: 2.6,
-      ease: 'power1.inOut',
-      onUpdate() {
-        const v = Math.round(counter.val)
-        setProgress(v)
-        if (countRef.current) countRef.current.textContent = String(v).padStart(3, '0')
+    const finish = () => {
+      try {
+        sessionStorage.setItem(INTRO_STORAGE_KEY, '1')
+      } catch {
+        // プライベートブラウズなどで保存できなくても、表示は続ける
+      }
+      delete root.dataset.intro
+    }
 
-        // キャラクターをバーの先端に追従させる
-        if (charaRef.current && barFillRef.current) {
-          const barEl = barFillRef.current
-          const barRect = barEl.parentElement!.getBoundingClientRect()
-          const filled = (v / 100) * barRect.width
-          // キャラをバー右端に配置（キャラ幅の半分だけ左にオフセット）
-          charaRef.current.style.left = `${filled}px`
-        }
-      },
-    })
+    const track = trackRef.current
+    const distance = track
+      ? track.clientWidth - (charaRef.current?.clientWidth ?? 0)
+      : 0
 
-    // 完了後: キャラがゴール → オーバーレイが上にスライドアウト
-    tl.to({}, { duration: 0.5 })
-    tl.to(overlayRef.current, {
-      yPercent: -100,
-      duration: 0.9,
-      ease: 'expo.inOut',
-      onComplete,
-    })
+    const tl = gsap.timeline({ onComplete: finish })
+    tlRef.current = tl
+    tl.fromTo(
+      charaRef.current,
+      { x: 0 },
+      { x: distance, duration: 1, ease: 'none' },
+      0,
+    )
+      .fromTo(
+        charaRef.current,
+        { y: 0 },
+        { y: -8, duration: 0.125, ease: 'sine.out', yoyo: true, repeat: 7 },
+        0,
+      )
+      .fromTo(
+        logoRef.current,
+        { clipPath: 'inset(0 100% 0 0)' },
+        { clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'none' },
+        0,
+      )
+      .to(
+        coverRef.current,
+        { yPercent: -100, duration: 0.4, ease: 'expo.in' },
+        '+=0.05',
+      )
 
-    return () => { tl.kill() }
-  }, [onComplete])
+    const skip = () => tl.progress(1)
+    window.addEventListener('keydown', skip, { once: true })
+    return () => {
+      window.removeEventListener('keydown', skip)
+      tl.kill()
+    }
+  }, [])
 
   return (
     <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-swing-black overflow-hidden"
+      ref={coverRef}
+      className="intro-cover fixed inset-0 z-[100] flex-col items-center justify-center bg-paper px-6"
+      onClick={() => tlRef.current?.progress(1)}
+      aria-hidden
     >
-      {/* グレイン */}
-      <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{
-          backgroundImage:
-            'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
-          backgroundSize: '200px 200px',
-        }}
-      />
-
-      {/* ロゴ */}
       <img
-        src="/images/swing_logo.jpg"
-        alt="SWING"
-        className="w-48 sm:w-60 object-contain mb-20 opacity-90"
+        ref={logoRef}
+        src="/images/hand/logo.webp"
+        alt=""
+        width={572}
+        height={420}
+        className="h-auto w-[min(420px,78vw)]"
+        style={{ clipPath: 'inset(0 100% 0 0)' }}
       />
-
-      {/* プログレスバー + キャラクター */}
-      <div className="relative w-[64vw] max-w-2xl">
-        {/* キャラクター（バー右端に追従） */}
+      <div ref={trackRef} className="relative mt-6 w-[min(520px,86vw)]">
         <img
           ref={charaRef}
-          src="/images/swing_chara.png"
+          src="/images/hand/chara.webp"
           alt=""
-          aria-hidden
-          className="absolute bottom-2 w-20 pointer-events-none"
-          style={{
-            left: 0,
-            transform: 'translateX(-40%)',
-            animation: 'chara-run 0.45s ease-in-out infinite alternate',
-          }}
+          width={323}
+          height={328}
+          className="absolute bottom-full left-0 mb-[-6px] w-14"
         />
-
-        {/* バー本体 */}
-        <div className="relative h-[3px] w-full bg-swing-amber/15 rounded-full overflow-hidden">
-          <div
-            ref={barFillRef}
-            className="absolute inset-y-0 left-0 bg-swing-amber rounded-full"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <Keys height={38} />
       </div>
-
-      {/* カウンター */}
-      <div className="mt-5 flex items-baseline gap-1 font-mono text-swing-amber/50">
-        <span ref={countRef} className="text-2xl font-bold tabular-nums">
-          000
-        </span>
-        <span className="text-sm">%</span>
-      </div>
-
-      {/* キャラのランアニメーション（上下バウンス + 傾き） */}
-      <style>{`
-        @keyframes chara-run {
-          from { transform: translateX(-40%) translateY(0px) rotate(-4deg); }
-          to   { transform: translateX(-40%) translateY(-10px) rotate(3deg); }
-        }
-      `}</style>
+      <p className="mt-8 text-sm font-bold">{t('loading.skip')}</p>
     </div>
   )
 }

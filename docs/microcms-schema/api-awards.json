@@ -1,0 +1,80 @@
+{
+  "apiFields": [
+    {
+      "idValue": "f1a2b3c4d5",
+      "fieldId": "band",
+      "name": "バンド",
+      "kind": "select",
+      "required": true,
+      "selectItems": [
+        { "id": "1a2b3c4d", "value": "Blue Spirits Jazz Orchestra" },
+        { "id": "2b3c4d5e", "value": "Swing Arcade Orchestra" },
+        { "id": "3c4d5e6f", "value": "The New Wave Jazz Orchestra" }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
+    },
+    {
+      "idValue": "a2b3c4d5e6",
+      "fieldId": "contest",
+      "name": "コンテスト",
+      "kind": "select",
+      "required": true,
+      "selectItems": [
+        { "id": "4d5e6f7a", "value": "山野ビッグバンドジャズコンテスト" },
+        { "id": "5e6f7a8b", "value": "国際ジャズオーケストラ・フェスティバル（ステラジャム）" },
+        { "id": "6f7a8b9c", "value": "その他" }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
+    },
+    {
+      "idValue": "b3c4d5e6f7",
+      "fieldId": "year",
+      "name": "年",
+      "kind": "number",
+      "required": true
+    },
+    {
+      "idValue": "c4d5e6f7a8",
+      "fieldId": "result",
+      "name": "順位（「4位」「順位不明」「出場せず」「コンサート形式」など）",
+      "kind": "text",
+      "required": true,
+      "isUnique": false
+    },
+    {
+      "idValue": "d5e6f7a8b9",
+      "fieldId": "prize",
+      "name": "バンドの賞（任意。学バンアワードは「学バンアワード」と書く）",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "e6f7a8b9c0",
+      "fieldId": "soloists",
+      "name": "ソリスト賞（1行に1人。例: 優秀ソリスト賞 上田美恵（vo））",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "f7a8b9c0d1",
+      "fieldId": "others",
+      "name": "そのほかの賞（1行に1つ。任意）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "a8b9c0d1e2",
+      "fieldId": "concertmaster",
+      "name": "コンサートマスター（任意）",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    }
+  ],
+  "customFields": []
+}

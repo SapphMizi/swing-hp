@@ -1,0 +1,95 @@
+{
+  "apiFields": [
+    {
+      "idValue": "3f2a8a7af9",
+      "fieldId": "band",
+      "name": "バンド",
+      "kind": "select",
+      "required": true,
+      "selectItems": [
+        { "id": "0186e549", "value": "Blue Spirits Jazz Orchestra" },
+        { "id": "dbc623fc", "value": "Swing Arcade Orchestra" },
+        { "id": "ecf94ec5", "value": "The New Wave Jazz Orchestra" }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
+    },
+    {
+      "idValue": "0fb7479750",
+      "fieldId": "desc",
+      "name": "紹介文",
+      "kind": "textArea",
+      "required": true,
+      "isUnique": false
+    },
+    {
+      "idValue": "fa6cfbf1b9",
+      "fieldId": "desc_en",
+      "name": "紹介文（英語・任意）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "b81c0e5a42",
+      "fieldId": "points",
+      "name": "活動の特徴（1行に1つ。部について のページに出る）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "c4e9d1f063",
+      "fieldId": "points_en",
+      "name": "活動の特徴（英語・任意）",
+      "kind": "textArea",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "c352d218c8",
+      "fieldId": "photos",
+      "name": "写真（最大5枚。1枚目がバンド紹介に出る）",
+      "kind": "mediaList",
+      "required": false
+    },
+    {
+      "idValue": "a0ce064d38",
+      "fieldId": "instagram",
+      "name": "Instagram の URL",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "f65495927a",
+      "fieldId": "x",
+      "name": "X の URL",
+      "kind": "text",
+      "required": false,
+      "isUnique": false
+    },
+    {
+      "idValue": "d7a3f6b215",
+      "fieldId": "story",
+      "name": "バンドの歩み（歴史のページに出る。見出しと、最後に書いた人の名前を入れる）",
+      "kind": "richEditorV2",
+      "required": false
+    },
+    {
+      "idValue": "e1b5c8a927",
+      "fieldId": "story_en",
+      "name": "バンドの歩み（英語・任意）",
+      "kind": "richEditorV2",
+      "required": false
+    },
+    {
+      "idValue": "021e30d2f7",
+      "fieldId": "order",
+      "name": "並び順（小さい順に表示）",
+      "kind": "number",
+      "required": true
+    }
+  ],
+  "customFields": []
+}
