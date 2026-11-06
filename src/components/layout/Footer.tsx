@@ -38,7 +38,7 @@ export function Footer() {
                   {/* スマホでは押しやすい大きさのボタン、PC では文字のリンク */}
                   <Link
                     to={to}
-                    className="flex min-h-12 items-center rounded-full border-2 border-ink bg-paper-light px-5 text-ink no-underline transition-colors duration-150 hover:bg-yellow md:min-h-0 md:border-0 md:bg-transparent md:px-0 md:underline md:hover:bg-transparent"
+                    className="squish flex min-h-12 items-center rounded-full border-2 border-ink bg-paper-light px-5 text-ink no-underline hover:bg-yellow md:min-h-0 md:border-0 md:bg-transparent md:px-0 md:underline md:hover:bg-transparent"
                   >
                     {t(key)}
                   </Link>

@@ -4,6 +4,7 @@ import type { SiteSettings } from '../../lib/cms-types'
 import { imageSrcSet, imageUrl, useLocalized } from '../../lib/format'
 import { ButtonLink } from '../ui/ButtonLink'
 import { Keys } from '../ui/Keys'
+import { Toy } from '../ui/Toy'
 
 const INTERVAL = 6000
 
@@ -94,13 +95,16 @@ export function Hero({ site }: { site: SiteSettings }) {
                 className="absolute -top-3 right-[8%] h-7 w-20 rotate-[7deg] bg-teal/80 mix-blend-multiply"
               />
             </figure>
-            <img
-              src="/images/hand/chara.webp"
-              alt=""
-              width={323}
-              height={328}
-              className="absolute -bottom-10 -left-6 w-24 md:w-32"
-            />
+            <Toy className="absolute -bottom-10 -left-6 w-24 md:w-32">
+              <img
+                src="/images/hand/chara.webp"
+                alt=""
+                width={323}
+                height={328}
+                draggable={false}
+                className="breathe block w-full"
+              />
+            </Toy>
           </div>
         </div>
       ) : (

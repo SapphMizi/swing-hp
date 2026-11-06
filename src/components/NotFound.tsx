@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Page } from './layout/Page'
 import { SectionHeading } from './ui/SectionHeading'
 import { ButtonLink } from './ui/ButtonLink'
+import { Toy } from './ui/Toy'
 
 export function NotFound() {
   const { t } = useTranslation()
@@ -17,13 +18,16 @@ export function NotFound() {
             <ButtonLink to="/">{t('notFound.home')}</ButtonLink>
           </div>
         </div>
-        <img
-          src="/images/hand/chara.webp"
-          alt=""
-          width={323}
-          height={328}
-          className="mx-auto w-40 -rotate-12"
-        />
+        <Toy className="mx-auto w-40 -rotate-12">
+          <img
+            src="/images/hand/chara.webp"
+            alt=""
+            width={323}
+            height={328}
+            draggable={false}
+            className="breathe block w-full"
+          />
+        </Toy>
       </div>
     </Page>
   )

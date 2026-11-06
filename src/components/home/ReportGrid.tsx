@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import type { Post } from '../../lib/cms-types'
 import { formatDate, useLocalized } from '../../lib/format'
 import { TapedPhoto } from '../ui/TapedPhoto'
+import { EmptyState } from '../ui/EmptyState'
 
 const TILTS = [-2, 1.5, -1, 2, -1.5, 1]
 // 写真がない記事に使う面の色
@@ -18,11 +19,7 @@ export function ReportGrid({
   const l = useLocalized()
 
   if (posts.length === 0) {
-    return (
-      <p className="rounded-2xl border-2 border-dashed border-ink/50 bg-paper-light px-6 py-8 font-bold">
-        {emptyText}
-      </p>
-    )
+    return <EmptyState text={emptyText} kind="bass" />
   }
 
   return (

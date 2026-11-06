@@ -10,6 +10,7 @@ import { SectionHeading } from '../components/ui/SectionHeading'
 import { ButtonLink } from '../components/ui/ButtonLink'
 import { TornEdge } from '../components/ui/TornEdge'
 import { bandsQuery, postsQuery, siteQuery } from '../lib/queries'
+import { Toy } from '../components/ui/Toy'
 
 export const Route = createFileRoute('/')({
   loader: ({ context: { queryClient } }) =>
@@ -131,14 +132,17 @@ function Home() {
               loading="lazy"
               className="ml-auto w-[78%]"
             />
-            <img
-              src="/images/hand/chara.webp"
-              alt=""
-              width={323}
-              height={328}
-              loading="lazy"
-              className="-mt-6 w-[42%]"
-            />
+            <Toy className="-mt-6 w-[42%]">
+              <img
+                src="/images/hand/chara.webp"
+                alt=""
+                width={323}
+                height={328}
+                loading="lazy"
+                draggable={false}
+                className="breathe block w-full"
+              />
+            </Toy>
             <p className="absolute bottom-6 right-6 font-hand text-xl text-ink">
               {t('home.joinNote')}
             </p>

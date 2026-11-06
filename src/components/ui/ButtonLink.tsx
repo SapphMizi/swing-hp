@@ -29,7 +29,7 @@ export function ButtonLink({
   return (
     <Link
       to={to}
-      className={`group inline-flex min-h-12 items-center gap-4 rounded-full border-2 py-2 pl-6 pr-2 font-bold no-underline transition-colors duration-150 ${STYLES[variant]} ${className}`}
+      className={`group inline-flex min-h-12 items-center gap-4 rounded-full border-2 py-2 pl-6 pr-2 squish font-bold no-underline ${STYLES[variant]} ${className}`}
     >
       <span>{children}</span>
       <span

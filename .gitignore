@@ -17,3 +17,6 @@ todos.json
 .impeccable/hook.cache.json
 .impeccable/config.local.json
 .env.local
+
+# yomiyasu の検査記録
+.yomiyasu/

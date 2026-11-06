@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import type { Band } from '../../lib/cms-types'
-import { BAND_BG, BAND_TEXT } from '../../lib/bands'
+import { BAND_BG, BAND_INSTRUMENT, BAND_TEXT } from '../../lib/bands'
+import { Instrument } from '../ui/Instrument'
+import { Toy } from '../ui/Toy'
 import { TornEdge } from '../ui/TornEdge'
 import { useLocalized } from '../../lib/format'
 import { SnsLinks } from '../ui/SnsLinks'
@@ -44,12 +46,22 @@ export function BandSheets({
                     : 'grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16'
                 }
               >
-                <Heading
-                  id={`band-${band.id}`}
-                  className="text-[clamp(2rem,5vw,3.5rem)] font-black leading-[1.05] [text-wrap:balance]"
-                >
-                  {name}
-                </Heading>
+                <div className="flex items-end justify-between gap-4">
+                  <Heading
+                    id={`band-${band.id}`}
+                    className="text-[clamp(2rem,5vw,3.5rem)] font-black leading-[1.05] [text-wrap:balance]"
+                  >
+                    {name}
+                  </Heading>
+                  <Toy
+                    className={`w-24 shrink-0 md:w-32 ${flip ? 'rotate-[6deg]' : '-rotate-[6deg]'}`}
+                  >
+                    <Instrument
+                      kind={BAND_INSTRUMENT[slug]}
+                      className="block w-full"
+                    />
+                  </Toy>
+                </div>
                 <div>
                   <p
                     className={`max-w-[46ch] text-lg leading-relaxed ${band.photo ? 'mt-5' : ''}`}

@@ -55,7 +55,8 @@ src/
 │   ├── layout/               # Header（鍵盤のナビ）、Footer、Page（外枠）
 │   ├── loading/              # LoadingScreen
 │   ├── home/                 # Hero、NewsList、BandSheets、ReportGrid
-│   ├── ui/                   # Keys（鍵盤の帯）、SectionHeading、StickyDate、TapedPhoto、ButtonLink、RichText、SnsLinks
+│   ├── ui/                   # Keys（鍵盤の帯）、SectionHeading、StickyDate、TapedPhoto、ButtonLink、RichText、SnsLinks、
+│   │                         # Instrument（顔付きの楽器）、Toy（押すと跳ねて音符が出る）、EmptyState（眠る楽器）
 │   ├── ArticlePage.tsx       # お知らせ・ライブレポートの本文
 │   └── NotFound.tsx
 ├── server/cms.ts             # createServerFn で microCMS を読む。生のデータを画面用の型に変換する
@@ -92,6 +93,7 @@ docs/microcms-schema/         # microCMS にインポートするスキーマ
 
 - **ローディング画面** は SSR の HTML に最初から含め、`__root.tsx` の head のスクリプトが初回訪問かつ視差効果を減らす設定がオフのときだけ `html[data-intro]` を付けて表示する。終わると `sessionStorage` に記録する。JavaScript が動かなくても CSS で 4 秒後に外れる。
 - **スクロール時の演出** は見出しのマーカー線だけ（`SectionHeading`、IntersectionObserver で1回だけ）。ScrollTrigger は使わない。
+- **楽器とキャラクターの動き** は `src/styles.css` の末尾の CSS（まばたき、寝息、押したときの跳ねと音符、ボタンの縮み）。視差効果を減らす設定ではすべて止める。
 - **microCMS** の API キーは `src/server/cms.ts` の中だけで読む。環境変数がない、または API が失敗したときもページは表示する（記事は空、バンドと年表は `defaults.ts`）。管理画面のセレクトの選択肢は日本語・正式名で、`cms.ts` で識別子に変換している。
 - **キャッシュ** は `__root.tsx` の `headers` で `s-maxage=60, stale-while-revalidate=600`。公開から1分ほどで反映されるので Webhook は使わない。
 - **i18n** は URL を変えないクライアントサイドトグル。英語欄が空なら日本語を出す（`useLocalized`）。

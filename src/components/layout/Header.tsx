@@ -93,13 +93,13 @@ export function Header() {
               type="button"
               onClick={toggleLang}
               aria-label={t('nav.langLabel')}
-              className="min-h-11 rounded-full border-2 border-ink bg-paper-light px-4 text-sm font-bold text-ink transition-colors duration-150 hover:bg-yellow"
+              className="squish min-h-11 rounded-full border-2 border-ink bg-paper-light px-4 text-sm font-bold text-ink hover:bg-yellow"
             >
               {t('nav.lang')}
             </button>
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink bg-paper-light text-ink lg:hidden"
+              className="squish flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink bg-paper-light text-ink lg:hidden"
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"

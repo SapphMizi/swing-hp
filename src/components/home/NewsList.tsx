@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import type { Post } from '../../lib/cms-types'
 import { useLocalized } from '../../lib/format'
+import { EmptyState } from '../ui/EmptyState'
 import { StickyDate } from '../ui/StickyDate'
 
 // 行の色はアイコンの色鉛筆の色を順に使う。文字は ink(どの色の上でも 6.7:1 以上)
@@ -18,11 +19,7 @@ export function NewsList({
   const l = useLocalized()
 
   if (posts.length === 0) {
-    return (
-      <p className="rounded-2xl border-2 border-dashed border-ink/50 bg-paper-light px-6 py-8 font-bold">
-        {emptyText}
-      </p>
-    )
+    return <EmptyState text={emptyText} kind="trumpet" />
   }
 
   return (
