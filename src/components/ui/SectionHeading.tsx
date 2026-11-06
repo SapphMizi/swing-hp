@@ -90,9 +90,8 @@ export function SectionHeading({
         </span>
       </Tag>
       {i18n.language === 'ja' && (
-        <p
-          className={`mt-3 text-base font-bold ${tone === 'paper' ? 'text-paper-light' : 'text-pink-deep'}`}
-        >
+        <p className="mt-3 flex w-fit -rotate-2 items-center gap-2 rounded-full bg-pink-deep py-1 pl-2.5 pr-4 text-sm font-bold text-paper-light">
+          <span aria-hidden className="h-2 w-2 rounded-full bg-paper-light" />
           {ja}
         </p>
       )}
