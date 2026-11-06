@@ -80,7 +80,7 @@ export const ja = {
         stellar: '国際ジャズオーケストラ・フェスティバル',
         other: 'そのほかのコンテスト',
       },
-      times: '{{count}}回',
+      timesUnit: '回',
       placed: '入賞',
       gakuban: '学バンアワード',
       concertmaster: 'コンサートマスター',

@@ -3,7 +3,7 @@ import type { LinkProps } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import type { Post } from '../lib/cms-types'
-import { BAND_NAME } from '../lib/bands'
+import { BAND_BG, BAND_NAME } from '../lib/bands'
 import { formatDate, useLocalized } from '../lib/format'
 import { Page } from './layout/Page'
 import { RichText } from './ui/RichText'
@@ -57,15 +57,19 @@ export function ArticlePage({
           </h1>
           {post.bands && post.bands.length > 0 && (
             <ul
-              className="mt-4 flex flex-wrap gap-2"
+              className="mt-4 flex flex-wrap gap-x-5 gap-y-1"
               aria-label={t('common.bands')}
             >
               {post.bands.map((b) => (
                 <li
                   key={b}
-                  className="rounded-full border-2 border-ink bg-paper-light px-3 text-sm font-black"
+                  className="flex items-center gap-2 text-sm font-bold"
                   lang="en"
                 >
+                  <span
+                    aria-hidden
+                    className={`h-3 w-3 shrink-0 rounded-full border-2 border-ink ${BAND_BG[b]}`}
+                  />
                   {BAND_NAME[b]}
                 </li>
               ))}

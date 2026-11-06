@@ -64,13 +64,12 @@ function rankOf(result: string) {
   return m ? Number(m[1]) : null
 }
 
-// 順位の付箋の色。1位は黄、2位と3位は橙、ほかは紙の色。順位がない年は点線
+// 順位の文字の強さ。3位までは大きく、順位がない年(出場せず など)は薄く
 function rankStyle(result: string) {
   const rank = rankOf(result)
-  if (rank === null) return 'border-dashed bg-transparent text-ink-soft'
-  if (rank === 1) return 'bg-yellow'
-  if (rank <= 3) return 'bg-orange'
-  return 'bg-paper-light'
+  if (rank === null) return 'text-sm text-ink-soft'
+  if (rank <= 3) return 'text-xl font-black'
+  return 'text-base font-black'
 }
 
 function History() {
@@ -249,7 +248,6 @@ function AwardTable({
       key: `rank-${rank}`,
       label: `${rank}位`,
       count: countRank(rank, rank),
-      bg: rankStyle(`${rank}位`),
     })),
     ...(contest === 'yamano'
       ? [
@@ -257,7 +255,6 @@ function AwardTable({
             key: 'placed',
             label: t('history.placed'),
             count: countRank(4, PLACED_UNTIL),
-            bg: 'bg-teal',
           },
         ]
       : []),
@@ -265,7 +262,6 @@ function AwardTable({
       key: 'gakuban',
       label: t('history.gakuban'),
       count: list.filter((a) => a.prize === GAKUBAN).length,
-      bg: 'bg-green',
     },
   ].filter((p) => p.count > 0)
 
@@ -282,17 +278,22 @@ function AwardTable({
         {BAND_NAME[band]}
       </p>
       {summary.length > 0 && (
-        <ul className="mt-5 flex flex-wrap gap-3">
-          {summary.map(({ key, label, count, bg }) => (
-            <li
+        <dl className="mt-6 grid grid-cols-3 gap-y-5 sm:flex sm:gap-0">
+          {summary.map(({ key, label, count }) => (
+            <div
               key={key}
-              className={`flex items-baseline gap-2 rounded-full border-2 border-ink px-4 py-1.5 font-black ${bg}`}
+              className="sm:border-l-2 sm:border-dashed sm:border-ink/30 sm:px-6 sm:first:border-l-0 sm:first:pl-0"
             >
-              <span className="text-lg tabular">{label}</span>
-              <span className="text-sm">{t('history.times', { count })}</span>
-            </li>
+              <dt className="text-sm font-bold">{label}</dt>
+              <dd className="mt-1 text-4xl font-black leading-none tabular">
+                {count}
+                <span className="ml-0.5 text-base">
+                  {t('history.timesUnit')}
+                </span>
+              </dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       )}
       <AwardRows list={recent} />
       {older.length > 0 && (
@@ -323,12 +324,8 @@ function AwardRows({ list }: { list: Award[] }) {
           className="grid grid-cols-[3.5rem_1fr] gap-x-4 gap-y-1 py-4 sm:grid-cols-[4.5rem_7.5rem_1fr_14rem] sm:items-baseline"
         >
           <span className="text-xl font-black tabular">{a.year}</span>
-          <span className="sm:order-none">
-            <span
-              className={`inline-block rounded-full border-2 border-ink px-3 py-0.5 text-sm font-black tabular ${rankStyle(a.result)}`}
-            >
-              {a.result}
-            </span>
+          <span className={`leading-tight tabular ${rankStyle(a.result)}`}>
+            {a.result}
           </span>
           <div className="col-start-2 text-sm leading-relaxed sm:col-start-auto">
             {a.prize && <p className="font-bold">{a.prize}</p>}

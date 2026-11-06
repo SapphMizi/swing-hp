@@ -80,7 +80,7 @@ export const en = {
         stellar: 'International Jazz Orchestra Festival',
         other: 'Other contests',
       },
-      times: '{{count}}×',
+      timesUnit: '×',
       placed: 'Placed',
       gakuban: 'Gakuban Award',
       concertmaster: 'Concertmaster',
