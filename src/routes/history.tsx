@@ -44,6 +44,11 @@ const KIND_DOT: Record<HistoryKind, string> = {
 }
 const KINDS = Object.keys(KIND_DOT) as HistoryKind[]
 
+// 山野ビッグバンドジャズコンテストで入賞になる順位の下限
+const PLACED_UNTIL = 10
+// microCMS の「バンドの賞」にこの文言が入った年を数える
+const GAKUBAN = '学バンアワード'
+
 // 最初に見せるコンテストの記録の件数。残りは「すべて見る」で開く
 const RECENT = 8
 
@@ -233,12 +238,36 @@ function AwardTable({
   const recent = list.slice(0, RECENT)
   const older = list.slice(RECENT)
   // 3位までに入った回数
-  const podium = [1, 2, 3]
-    .map((rank) => ({
-      rank,
-      count: list.filter((a) => rankOf(a.result) === rank).length,
-    }))
-    .filter((p) => p.count > 0)
+  const countRank = (from: number, to: number) =>
+    list.filter((a) => {
+      const rank = rankOf(a.result)
+      return rank !== null && rank >= from && rank <= to
+    }).length
+  // 1〜3位はそれぞれの回数。山野では10位以内が入賞なので、4〜10位はまとめて「入賞」として数える
+  const summary = [
+    ...[1, 2, 3].map((rank) => ({
+      key: `rank-${rank}`,
+      label: `${rank}位`,
+      count: countRank(rank, rank),
+      bg: rankStyle(`${rank}位`),
+    })),
+    ...(contest === 'yamano'
+      ? [
+          {
+            key: 'placed',
+            label: t('history.placed'),
+            count: countRank(4, PLACED_UNTIL),
+            bg: 'bg-teal',
+          },
+        ]
+      : []),
+    {
+      key: 'gakuban',
+      label: t('history.gakuban'),
+      count: list.filter((a) => a.prize === GAKUBAN).length,
+      bg: 'bg-green',
+    },
+  ].filter((p) => p.count > 0)
 
   return (
     <div>
@@ -252,14 +281,14 @@ function AwardTable({
         />
         {BAND_NAME[band]}
       </p>
-      {podium.length > 0 && (
+      {summary.length > 0 && (
         <ul className="mt-5 flex flex-wrap gap-3">
-          {podium.map(({ rank, count }) => (
+          {summary.map(({ key, label, count, bg }) => (
             <li
-              key={rank}
-              className={`flex items-baseline gap-2 rounded-full border-2 border-ink px-4 py-1.5 font-black ${rankStyle(`${rank}位`)}`}
+              key={key}
+              className={`flex items-baseline gap-2 rounded-full border-2 border-ink px-4 py-1.5 font-black ${bg}`}
             >
-              <span className="text-lg tabular">{rank}位</span>
+              <span className="text-lg tabular">{label}</span>
               <span className="text-sm">{t('history.times', { count })}</span>
             </li>
           ))}

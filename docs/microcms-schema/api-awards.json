@@ -46,7 +46,7 @@
     {
       "idValue": "d5e6f7a8b9",
       "fieldId": "prize",
-      "name": "バンドの賞（任意）",
+      "name": "バンドの賞（任意。学バンアワードは「学バンアワード」と書く）",
       "kind": "text",
       "required": false,
       "isUnique": false

@@ -81,6 +81,8 @@ export const ja = {
         other: 'そのほかのコンテスト',
       },
       times: '{{count}}回',
+      placed: '入賞',
+      gakuban: '学バンアワード',
       concertmaster: 'コンサートマスター',
       showAll: '{{from}}年からの記録をすべて見る',
     },

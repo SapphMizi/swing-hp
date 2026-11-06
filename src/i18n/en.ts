@@ -81,6 +81,8 @@ export const en = {
         other: 'Other contests',
       },
       times: '{{count}}×',
+      placed: 'Placed',
+      gakuban: 'Gakuban Award',
       concertmaster: 'Concertmaster',
       showAll: 'Show all results since {{from}}',
     },
