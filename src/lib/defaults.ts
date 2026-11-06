@@ -35,15 +35,6 @@ const STORY_SAO = `
 <p>文：2011年入学 高田悠（p）さん</p>
 `
 
-const STORY_BS = `
-<h3>日本E軍 Monkey Club Jazz Orchestra</h3>
-<p>1991年入学のトランペット阿部泰也は、New Wave Jazz Orchestra で演奏する傍らD軍バンドにも参加し、D年の時にはそのコンマスを任された。しかし例年D軍でやってるレパートリーだけでは飽き足らず、京都大学Dark Blue JOのメンバーに頼み込んで譜面を貸してもらいDuke Ellingtonの音楽へ足を踏み入れた。</p>
-<p>合宿の発表ではOBからケチョンケチョンに言われながらも「極めてやる！」と決意。そして1993年にバンド結成。阪大坂下にあったデニーズで練習後集まって「D軍の次やからE軍やろ？Ellingtonやし！」「メンバーは猿みたいなやつばっかりやしMonkeyか？」といとも簡単に決まりました。</p>
-<p>結成したその年にビデオ審査に合格して「神戸ジャズコンベンション」に出場。続けて「天保山ビッグバンドコンペティション」にも出場し、トランペット阿部が優秀ソリスト賞を受賞。そして1994年、第25回ヤマノビッグバンドジャズコンテストに初出場し、まさかの「スイングジャーナル社賞」受賞の快挙。明治、慶應、阪大NWに続く4位でした。</p>
-<p>続く1995年もヤマノに出場して「奨励賞」を受賞。受賞にはこだわらず、多くの方々に音楽を楽しんで貰いたいという想いが結果的に好評価に繋がりました。「阪大はNew Waveだけではないよ！」という雰囲気が出来上がりました。</p>
-<p>文：創設者 阿部泰也（Tp）さん</p>
-`
-
 export const DEFAULT_BANDS: Band[] = [
   {
     id: 'bsjo',
@@ -62,7 +53,6 @@ export const DEFAULT_BANDS: Band[] = [
       'Rehearses once or twice a week. Plays mostly at campus events, sometimes at outside events too',
       'Until 2025 the band took a new name each year. Since 2026 it has played as Blue Spirits Jazz Orchestra',
     ],
-    story: STORY_BS,
   },
   {
     id: 'sao',

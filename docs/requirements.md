@@ -182,5 +182,4 @@ yui540 のモーション集(https://yui540.com/motions)を参考に、押せる
 - 各バンドの Instagram と X の URL、部のメールアドレス
 - Monkey Club Jazz Orchestra の結成年。年表では1994年、阿部さんの文章では1993年になっている
 - Swing Arcade Orchestra の結成年。年表では2010年、高田さんの文章では2012年になっている
-- Monkey Club Jazz Orchestra の話を、Blue Spirits Jazz Orchestra の歩みとして載せてよいか
 - 歴史のページに載せる写真と、名前を載せる OB・OG の方の了承
