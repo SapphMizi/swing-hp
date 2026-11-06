@@ -1,5 +1,4 @@
 import type { BandSlug } from './cms-types'
-import type { InstrumentKind } from '../components/ui/Instrument'
 
 // 正式名。microCMS の「バンド」の選択肢と同じ文言にしておく
 export const BAND_NAME: Record<BandSlug, string> = {
@@ -19,11 +18,4 @@ export const BAND_TEXT: Record<BandSlug, string> = {
   bsjo: 'text-paper-light',
   sao: 'text-ink',
   tnwjo: 'text-paper-light',
-}
-
-// バンドの面に貼る楽器。Count Basie の楽曲を演奏する The New Wave Jazz Orchestra はピアノ
-export const BAND_INSTRUMENT: Record<BandSlug, InstrumentKind> = {
-  bsjo: 'sax',
-  sao: 'drum',
-  tnwjo: 'piano',
 }

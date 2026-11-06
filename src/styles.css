@@ -119,25 +119,9 @@ dd {
 }
 
 /* かわいい動き(yui540 のモーション集を参考にした)。
-   ・常に動くのは、まばたき・寝息・Zzz の小さな動きだけ
+   ・常に動くのは、キャラクターの寝息だけ
    ・跳ねる・音符が出るのは、押したときだけ
    ・視差効果を減らす設定では、下の media で全部止める */
-.instrument-eyes {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: blink 4.6s infinite;
-}
-@keyframes blink {
-  0%,
-  93%,
-  100% {
-    transform: scaleY(1);
-  }
-  96% {
-    transform: scaleY(0.1);
-  }
-}
-
 .breathe {
   transform-origin: 50% 100%;
   animation: breathe 3.2s ease-in-out infinite;
@@ -188,24 +172,6 @@ dd {
   100% {
     opacity: 0;
     transform: translate(var(--dx), -70px) scale(1) rotate(var(--rot));
-  }
-}
-
-.zzz {
-  animation: zzz 3.6s ease-out infinite;
-  opacity: 0;
-}
-@keyframes zzz {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.6);
-  }
-  25% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(14px, -34px) scale(1.1);
   }
 }
 
@@ -298,10 +264,8 @@ dd {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .instrument-eyes,
   .breathe,
   .boing,
-  .zzz,
   .note-pop,
   .letters-play .letter,
   .menu-pop,
@@ -311,7 +275,6 @@ dd {
   .letters-armed .letter {
     opacity: 1;
   }
-  .zzz,
   .note-pop {
     display: none;
   }

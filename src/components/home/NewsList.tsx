@@ -19,7 +19,7 @@ export function NewsList({
   const l = useLocalized()
 
   if (posts.length === 0) {
-    return <EmptyState text={emptyText} kind="trumpet" />
+    return <EmptyState text={emptyText} />
   }
 
   return (

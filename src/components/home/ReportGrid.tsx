@@ -19,7 +19,7 @@ export function ReportGrid({
   const l = useLocalized()
 
   if (posts.length === 0) {
-    return <EmptyState text={emptyText} kind="bass" />
+    return <EmptyState text={emptyText} />
   }
 
   return (
