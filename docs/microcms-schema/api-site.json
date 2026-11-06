@@ -10,7 +10,7 @@
     {
       "idValue": "280d69cee0",
       "fieldId": "heroCopy",
-      "name": "トップの紹介文（空なら既定の文）",
+      "name": "トップの紹介文（任意。空なら表示しない）",
       "kind": "textArea",
       "required": false,
       "isUnique": false

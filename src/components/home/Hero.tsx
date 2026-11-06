@@ -25,9 +25,8 @@ export function Hero({ site }: { site: SiteSettings }) {
     return () => clearInterval(id)
   }, [images.length])
 
-  const copy = site.heroCopy
-    ? l(site.heroCopy, site.heroCopy_en)
-    : t('home.heroCopy')
+  // 紹介文は microCMS の site.heroCopy に入力されたときだけ出す
+  const copy = site.heroCopy ? l(site.heroCopy, site.heroCopy_en) : null
   const hasPhoto = images.length > 0
 
   const intro = (
@@ -42,13 +41,15 @@ export function Hero({ site }: { site: SiteSettings }) {
           className={`h-auto w-full ${hasPhoto ? 'max-w-[480px]' : 'mx-auto max-w-[520px]'}`}
         />
       </h1>
-      <p
-        className={`mt-4 max-w-[22em] text-lg font-bold leading-relaxed md:text-xl ${hasPhoto ? '' : 'mx-auto text-center'}`}
-      >
-        {copy}
-      </p>
+      {copy && (
+        <p
+          className={`mt-4 max-w-[22em] text-lg font-bold leading-relaxed md:text-xl ${hasPhoto ? '' : 'mx-auto text-center'}`}
+        >
+          {copy}
+        </p>
+      )}
       <div
-        className={`mt-8 flex flex-wrap gap-3 ${hasPhoto ? '' : 'justify-center'}`}
+        className={`mt-6 flex flex-wrap gap-3 ${hasPhoto ? '' : 'justify-center'}`}
       >
         <ButtonLink to="/contact">{t('home.ctaJoin')}</ButtonLink>
         <ButtonLink to="/schedule" variant="secondary">

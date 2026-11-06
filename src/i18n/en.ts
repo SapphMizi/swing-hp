@@ -25,8 +25,6 @@ export const en = {
     },
 
     home: {
-      heroCopy:
-        'Founded in 1962. Three big bands play jazz at Meidokan on Osaka University’s Toyonaka Campus.',
       ctaJoin: 'Visit or join',
       ctaSchedule: 'Schedule',
       heroPhotoAlt: 'SWING playing live',

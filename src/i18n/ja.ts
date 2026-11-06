@@ -25,8 +25,6 @@ export const ja = {
     },
 
     home: {
-      heroCopy:
-        '1962年創部。豊中キャンパスの明道館で、3つのビッグバンドがジャズを演奏しています。',
       ctaJoin: '見学・入部の案内',
       ctaSchedule: 'スケジュール',
       heroPhotoAlt: 'SWING のライブの様子',
