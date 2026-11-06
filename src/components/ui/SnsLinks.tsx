@@ -26,7 +26,7 @@ function XIcon() {
 }
 
 const LINK =
-  'inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-ink bg-paper-light px-4 font-bold text-ink no-underline transition-colors duration-150 hover:bg-ink hover:text-paper-light'
+  'pop inline-flex min-h-11 items-center gap-2 rounded-full bg-paper-light px-4 font-bold text-ink no-underline hover:bg-yellow'
 
 export function SnsLinks({
   instagram,

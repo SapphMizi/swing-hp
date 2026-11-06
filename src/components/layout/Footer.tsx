@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Keys } from '../ui/Keys'
+import { NAV_DOTS } from '../../lib/dots'
 
 const LINKS = [
   { key: 'nav.about', to: '/about' },
@@ -33,13 +34,17 @@ export function Footer() {
         <div className="md:text-right">
           <nav aria-label={t('nav.menu')}>
             <ul className="grid grid-cols-2 gap-2 font-bold md:flex md:flex-wrap md:justify-end md:gap-x-6 md:gap-y-2">
-              {LINKS.map(({ key, to }) => (
+              {LINKS.map(({ key, to }, i) => (
                 <li key={to}>
                   {/* スマホでは押しやすい大きさのボタン、PC では文字のリンク */}
                   <Link
                     to={to}
-                    className="squish flex min-h-12 items-center rounded-full border-2 border-ink bg-paper-light px-5 text-ink no-underline hover:bg-yellow md:min-h-0 md:border-0 md:bg-transparent md:px-0 md:underline md:hover:bg-transparent"
+                    className="pop flex min-h-12 items-center gap-2.5 rounded-full bg-paper-light px-5 text-ink no-underline hover:bg-yellow md:min-h-0 md:border-0 md:bg-transparent md:px-0 md:shadow-none md:underline md:hover:translate-y-0 md:hover:bg-transparent md:hover:decoration-wavy md:hover:shadow-none"
                   >
+                    <span
+                      aria-hidden
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full md:hidden ${NAV_DOTS[i]}`}
+                    />
                     {t(key)}
                   </Link>
                 </li>

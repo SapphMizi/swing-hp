@@ -102,7 +102,7 @@ function Home() {
         )}
       </section>
 
-      <section className="relative bg-ink text-paper-light">
+      <section className="relative bg-ink text-paper-light [--pop:var(--color-pink)]">
         <TornEdge className="bg-ink" />
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 md:py-24 lg:grid-cols-[3fr_2fr]">
           <div>

@@ -30,7 +30,7 @@ export const Route = createFileRoute('/live-reports/')({
 })
 
 const TAB =
-  'inline-flex min-h-11 items-center rounded-full border-2 border-ink px-5 font-black no-underline tabular transition-colors duration-150'
+  'pop inline-flex min-h-11 items-center rounded-full px-5 font-black no-underline tabular'
 
 function LiveReports() {
   const { t } = useTranslation()
@@ -51,7 +51,7 @@ function LiveReports() {
                 activeOptions={{ includeSearch: true }}
                 className={`${TAB} bg-paper-light text-ink hover:bg-yellow`}
                 activeProps={{
-                  className: '!bg-ink !text-paper-light',
+                  className: '!bg-yellow translate-y-[4px] !shadow-none',
                   'aria-current': 'page',
                 }}
               >
@@ -66,7 +66,7 @@ function LiveReports() {
                   activeOptions={{ includeSearch: true }}
                   className={`${TAB} bg-paper-light text-ink hover:bg-yellow`}
                   activeProps={{
-                    className: '!bg-ink !text-paper-light',
+                    className: '!bg-yellow translate-y-[4px] !shadow-none',
                     'aria-current': 'page',
                   }}
                 >

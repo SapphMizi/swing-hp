@@ -6,7 +6,7 @@ export function StickyDate({ iso, tilt = -4 }: { iso: string; tilt?: number }) {
   return (
     <time
       dateTime={iso}
-      className="relative flex h-[4.5rem] w-[4.5rem] shrink-0 flex-col items-center justify-center bg-yellow leading-none text-ink shadow-[0_6px_10px_-5px_rgba(43,29,31,0.45)]"
+      className="wiggle relative flex h-[4.5rem] w-[4.5rem] shrink-0 flex-col items-center justify-center rounded-[0.4rem_0.4rem_0.4rem_1.1rem] bg-yellow leading-none text-ink shadow-[0_6px_10px_-5px_rgba(43,29,31,0.45)]"
       style={{ rotate: `${tilt}deg` }}
     >
       <span className="text-xs font-bold">{year}</span>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface SectionHeadingProps {
@@ -21,16 +21,23 @@ export function SectionHeading({
   const { i18n } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
   const [drawn, setDrawn] = useState(false)
+  // 文字の出し方。最初から画面にある見出しは動かさない(読み込み直後にちらつくため)
+  const [letters, setLetters] = useState<'static' | 'armed' | 'play'>('static')
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    let first = true
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setDrawn(true)
+          if (!first) setLetters('play')
           io.disconnect()
+        } else if (first) {
+          setLetters('armed')
         }
+        first = false
       },
       { rootMargin: '0px 0px -15% 0px' },
     )
@@ -41,6 +48,7 @@ export function SectionHeading({
   return (
     <div ref={ref} className={`mb-10 md:mb-14 ${className}`}>
       <Tag
+        aria-label={en}
         className={`relative inline-block font-black uppercase leading-[0.95] tracking-[-0.01em] text-[clamp(2.4rem,7vw,4.75rem)] ${
           tone === 'paper' ? 'text-paper-light' : 'text-ink'
         }`}
@@ -54,10 +62,36 @@ export function SectionHeading({
             transition: 'clip-path 300ms var(--ease-out-expo)',
           }}
         />
-        <span className="relative">{en}</span>
+        <span
+          aria-hidden
+          className={`relative ${letters === 'static' ? '' : `letters-${letters}`}`}
+        >
+          {/* 単語の途中で折り返さないよう、単語ごとにまとめる。空白は単語の外に置く */}
+          {en.split(' ').map((word, w, words) => (
+            <Fragment key={w}>
+              <span className="inline-block whitespace-nowrap">
+                {[...word].map((ch, c) => (
+                  <span
+                    key={c}
+                    className="letter"
+                    style={
+                      {
+                        '--i': words.slice(0, w).join('').length + c,
+                      } as React.CSSProperties
+                    }
+                  >
+                    {ch}
+                  </span>
+                ))}
+              </span>
+              {w < words.length - 1 && ' '}
+            </Fragment>
+          ))}
+        </span>
       </Tag>
       {i18n.language === 'ja' && (
-        <p className="mt-3 w-fit bg-pink-deep py-0.5 pl-3 pr-5 text-sm font-bold text-paper-light [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+        <p className="mt-3 flex w-fit -rotate-2 items-center gap-2 rounded-full bg-pink-deep py-1 pl-2.5 pr-4 text-sm font-bold text-paper-light">
+          <span aria-hidden className="h-2 w-2 rounded-full bg-paper-light" />
           {ja}
         </p>
       )}

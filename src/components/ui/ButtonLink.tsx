@@ -4,9 +4,8 @@ import { ArrowRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 const STYLES = {
-  primary:
-    'bg-pink-deep text-paper-light border-pink-deep hover:bg-ink hover:border-ink',
-  secondary: 'bg-paper-light text-ink border-ink hover:bg-yellow',
+  primary: 'bg-pink-deep text-paper-light hover:bg-ink',
+  secondary: 'bg-paper-light text-ink hover:bg-yellow',
 } as const
 
 const DOT = {
@@ -29,11 +28,11 @@ export function ButtonLink({
   return (
     <Link
       to={to}
-      className={`group inline-flex min-h-12 items-center gap-4 rounded-full border-2 py-2 pl-6 pr-2 squish font-bold no-underline ${STYLES[variant]} ${className}`}
+      className={`group inline-flex min-h-12 items-center gap-4 rounded-full py-2 pl-6 pr-2 pop font-bold no-underline ${STYLES[variant]} ${className}`}
     >
       <span>{children}</span>
       <span
-        className={`flex h-8 w-8 items-center justify-center rounded-full transition-transform duration-150 group-hover:translate-x-0.5 ${DOT[variant]}`}
+        className={`flex h-8 w-8 items-center justify-center rounded-full transition-transform duration-300 ease-[var(--ease-spring)] group-hover:translate-x-1 group-hover:-rotate-12 ${DOT[variant]}`}
       >
         <ArrowRight aria-hidden size={18} strokeWidth={2.5} />
       </span>

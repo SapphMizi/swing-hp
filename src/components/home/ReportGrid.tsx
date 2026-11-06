@@ -33,7 +33,7 @@ export function ReportGrid({
               params={{ id: post.id }}
               className="group block text-ink no-underline"
             >
-              <div className="transition-transform duration-150 group-hover:-translate-y-1">
+              <div className="transition-transform duration-300 ease-[var(--ease-spring)] group-hover:-translate-y-1.5 group-hover:rotate-1">
                 {post.eyecatch ? (
                   <TapedPhoto
                     image={post.eyecatch}
@@ -44,7 +44,7 @@ export function ReportGrid({
                 ) : (
                   <div
                     aria-hidden
-                    className={`flex aspect-[4/3] items-center justify-center border-2 border-ink p-6 ${PLAIN[i % PLAIN.length]}`}
+                    className={`flex aspect-[4/3] items-center justify-center rounded-[1.25rem] border-2 border-ink p-6 ${PLAIN[i % PLAIN.length]}`}
                     style={{ rotate: `${TILTS[i % TILTS.length]}deg` }}
                   >
                     <span className="font-hand text-2xl leading-snug">
@@ -59,7 +59,7 @@ export function ReportGrid({
               >
                 {formatDate(post.eventDate ?? post.publishedAt)}
               </time>
-              <span className="mt-1 block text-lg font-bold leading-snug group-hover:underline">
+              <span className="mt-1 block text-lg font-bold leading-snug decoration-pink-deep decoration-wavy decoration-2 group-hover:underline">
                 {title}
               </span>
             </Link>

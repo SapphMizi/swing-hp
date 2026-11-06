@@ -28,6 +28,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* 押したときの見た目は .pop で出すので、ブラウザの青い四角は消す */
+  -webkit-tap-highlight-color: transparent;
   scrollbar-color: var(--color-ink-soft) var(--color-paper);
   -webkit-text-size-adjust: 100%;
 }
@@ -48,11 +50,14 @@ body {
   color: var(--color-ink);
 }
 
-:focus-visible {
-  /* 青や紺の面の上でも見えるよう、黄色の縁取りを付ける */
-  outline: 3px solid var(--color-ink);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 5px var(--color-yellow);
+/* base の層に置き、.pop など部品の側で上書きできるようにする */
+@layer base {
+  :focus-visible {
+    /* 青や紺の面の上でも見えるよう、黄色の縁取りを付ける */
+    outline: 3px solid var(--color-ink);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--color-yellow);
+  }
 }
 
 a {
@@ -204,17 +209,92 @@ dd {
   }
 }
 
-/* 押すとむにっと縮み、離すとばねで戻る */
-.squish {
-  transition:
-    transform 320ms var(--ease-spring),
-    background-color 150ms,
-    border-color 150ms,
-    color 150ms;
+/* 押せる部品の共通の形。鍵盤のように下に厚みがあり、押すと沈む。
+   厚みの色は --pop で変えられる(濃い面の上では pink にする) */
+@layer components {
+  .pop {
+    border: 2px solid var(--color-ink);
+    box-shadow: 0 4px 0 0 var(--pop, var(--color-ink));
+    transition:
+      transform 280ms var(--ease-spring),
+      box-shadow 280ms var(--ease-spring),
+      background-color 150ms,
+      color 150ms;
+  }
+  @media (hover: hover) {
+    .pop:hover {
+      transform: translateY(1.5px);
+      box-shadow: 0 2.5px 0 0 var(--pop, var(--color-ink));
+    }
+  }
+  .pop:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 0 var(--pop, var(--color-ink));
+    transition-duration: 60ms;
+  }
+  .pop:focus-visible {
+    box-shadow:
+      0 4px 0 0 var(--pop, var(--color-ink)),
+      0 0 0 5px var(--color-yellow);
+  }
 }
-.squish:active {
-  transform: scale(0.94);
-  transition-duration: 80ms;
+
+/* 見出しの英字が1文字ずつぽんと出る(見出しが画面に入ったとき1回だけ) */
+.letters-armed .letter {
+  opacity: 0;
+}
+.letters-play .letter {
+  display: inline-block;
+  animation: letter-pop 460ms var(--ease-spring) both;
+  animation-delay: calc(var(--i) * 32ms);
+}
+@keyframes letter-pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* スマホのメニューの項目が、上から順にぽんと出る */
+.menu-pop {
+  animation: menu-pop 360ms var(--ease-spring) both;
+  animation-delay: calc(var(--i) * 35ms);
+}
+@keyframes menu-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* お知らせの行に触れると、付箋がぷるっと揺れる */
+@media (hover: hover) {
+  .group:hover .wiggle {
+    animation: wiggle 480ms var(--ease-out-expo);
+  }
+}
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-7deg);
+  }
+  55% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-2deg);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -222,14 +302,22 @@ dd {
   .breathe,
   .boing,
   .zzz,
-  .note-pop {
+  .note-pop,
+  .letters-play .letter,
+  .menu-pop,
+  .group:hover .wiggle {
     animation: none !important;
+  }
+  .letters-armed .letter {
+    opacity: 1;
   }
   .zzz,
   .note-pop {
     display: none;
   }
-  .squish:active {
-    transform: none;
+  .pop,
+  .pop:hover,
+  .pop:active {
+    transition-duration: 0ms;
   }
 }

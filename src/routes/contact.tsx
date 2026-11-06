@@ -35,7 +35,7 @@ function Contact() {
           <h2 id="mail-heading" className="text-2xl font-black">
             {t('contact.mailTitle')}
           </h2>
-          <div className="mt-5 rounded-2xl border-2 border-ink bg-paper-light p-6">
+          <div className="mt-5 rounded-[1.75rem] border-2 border-ink bg-paper-light p-6 shadow-[0_4px_0_0_var(--color-ink)]">
             {site.email ? (
               <a
                 href={`mailto:${site.email}`}
@@ -78,7 +78,7 @@ function Contact() {
               return (
                 <li
                   key={band.id}
-                  className={`flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 border-ink p-5 ${BAND_BG[band.slug]} ${BAND_TEXT[band.slug]}`}
+                  className={`flex flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border-2 border-ink p-5 shadow-[0_4px_0_0_var(--color-ink)] ${BAND_BG[band.slug]} ${BAND_TEXT[band.slug]}`}
                 >
                   <span className="text-lg font-black">{name}</span>
                   <SnsLinks

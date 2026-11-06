@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Menu, X } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { NAV_DOTS } from '../../lib/dots'
 
 // en は鍵盤に載せる英語のラベル。日本語表示のときは、その下に日本語を添える
 const NAV_LINKS = [
@@ -89,27 +90,53 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 self-center">
+            {/* 日本語と英語の切り替え。黄色のつまみが今の言語の側にすべる */}
             <button
               type="button"
               onClick={toggleLang}
               aria-label={t('nav.langLabel')}
-              className="squish min-h-11 rounded-full border-2 border-ink bg-paper-light px-4 text-sm font-bold text-ink hover:bg-yellow"
+              className="pop relative grid h-11 w-[5.5rem] grid-cols-2 items-center rounded-full bg-paper-light text-sm font-black text-ink"
             >
-              {t('nav.lang')}
+              <span
+                aria-hidden
+                className="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full bg-yellow transition-transform duration-300 ease-[var(--ease-spring)]"
+                style={{ transform: isJa ? 'none' : 'translateX(100%)' }}
+              />
+              <span aria-hidden className="relative" lang="ja">
+                JA
+              </span>
+              <span aria-hidden className="relative" lang="en">
+                EN
+              </span>
             </button>
             <button
               type="button"
-              className="squish flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink bg-paper-light text-ink lg:hidden"
+              className="pop relative flex h-11 w-11 items-center justify-center rounded-full bg-paper-light text-ink lg:hidden"
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={menuOpen ? t('nav.close') : t('nav.menu')}
             >
-              {menuOpen ? (
-                <X aria-hidden size={22} />
-              ) : (
-                <Menu aria-hidden size={22} />
-              )}
+              {/* 3本線が、開くと × に変わる */}
+              <span aria-hidden className="relative block h-4 w-5">
+                {[0, 1, 2].map((n) => (
+                  <span
+                    key={n}
+                    className="absolute left-0 h-[3px] w-full rounded-full bg-ink transition-[transform,opacity] duration-300 ease-[var(--ease-spring)]"
+                    style={{
+                      top: `${n * 6.5}px`,
+                      transform: menuOpen
+                        ? n === 0
+                          ? 'translateY(6.5px) rotate(45deg)'
+                          : n === 2
+                            ? 'translateY(-6.5px) rotate(-45deg)'
+                            : 'scaleX(0)'
+                        : 'none',
+                      opacity: menuOpen && n === 1 ? 0 : 1,
+                    }}
+                  />
+                ))}
+              </span>
             </button>
           </div>
         </div>
@@ -119,26 +146,37 @@ export function Header() {
         id="mobile-menu"
         aria-label={t('nav.menu')}
         hidden={!menuOpen}
-        className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b-2 border-ink bg-paper-light lg:hidden"
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto rounded-b-[2rem] border-2 border-t-0 border-ink bg-paper-light shadow-[0_18px_30px_-20px_rgba(43,29,31,0.6)] lg:hidden"
       >
-        <ul className="mx-auto max-w-7xl px-4 py-2 sm:px-6">
-          {NAV_LINKS.map(({ key, en, to }) => (
+        <ul className="mx-auto grid max-w-7xl gap-3 px-4 pb-6 pt-4 sm:px-6">
+          {NAV_LINKS.map(({ key, en, to }, i) => (
             <li
               key={to}
-              className="border-b-2 border-dashed border-ink/30 last:border-b-0"
+              className="menu-pop"
+              style={{ '--i': i } as React.CSSProperties}
             >
               <Link
                 to={to}
-                className="flex min-h-14 items-baseline gap-3 text-ink no-underline"
+                className="pop group flex min-h-14 items-center gap-3 rounded-full bg-paper px-5 text-ink no-underline"
                 activeProps={{
                   'aria-current': 'page',
-                  className: 'text-pink-deep',
+                  className: '!bg-yellow',
                 }}
               >
+                <span
+                  aria-hidden
+                  className={`h-3 w-3 shrink-0 rounded-full border-2 border-ink ${NAV_DOTS[i]}`}
+                />
                 <span className="text-xl font-black" lang="en">
                   {en}
                 </span>
                 {isJa && <span className="text-sm font-bold">{t(key)}</span>}
+                <ArrowRight
+                  aria-hidden
+                  size={20}
+                  strokeWidth={2.5}
+                  className="ml-auto transition-transform duration-300 ease-[var(--ease-spring)] group-hover:translate-x-1"
+                />
               </Link>
             </li>
           ))}

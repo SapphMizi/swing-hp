@@ -29,7 +29,7 @@ export function NewsList({
           <Link
             to="/news/$id"
             params={{ id: post.id }}
-            className={`group relative flex min-h-24 items-center gap-5 rounded-2xl border-2 border-ink py-3 pl-3 pr-5 text-ink no-underline transition-transform duration-150 hover:-translate-y-0.5 ${ROW_COLORS[i % ROW_COLORS.length]}`}
+            className={`pop group relative flex min-h-24 items-center gap-5 rounded-[1.75rem] py-3 pl-3 pr-4 text-ink no-underline ${ROW_COLORS[i % ROW_COLORS.length]}`}
           >
             <span className="-my-6 -ml-6">
               <StickyDate
@@ -40,12 +40,9 @@ export function NewsList({
             <span className="flex-1 text-base font-bold leading-snug md:text-lg">
               {l(post.title, post.title_en)}
             </span>
-            <ArrowRight
-              aria-hidden
-              size={22}
-              strokeWidth={2.5}
-              className="shrink-0 transition-transform duration-150 group-hover:translate-x-1"
-            />
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-paper-light transition-transform duration-300 ease-[var(--ease-spring)] group-hover:translate-x-1">
+              <ArrowRight aria-hidden size={18} strokeWidth={2.75} />
+            </span>
           </Link>
         </li>
       ))}

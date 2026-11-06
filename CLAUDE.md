@@ -93,7 +93,8 @@ docs/microcms-schema/         # microCMS にインポートするスキーマ
 
 - **ローディング画面** は SSR の HTML に最初から含め、`__root.tsx` の head のスクリプトが初回訪問かつ視差効果を減らす設定がオフのときだけ `html[data-intro]` を付けて表示する。終わると `sessionStorage` に記録する。JavaScript が動かなくても CSS で 4 秒後に外れる。
 - **スクロール時の演出** は見出しのマーカー線だけ（`SectionHeading`、IntersectionObserver で1回だけ）。ScrollTrigger は使わない。
-- **楽器とキャラクターの動き** は `src/styles.css` の末尾の CSS（まばたき、寝息、押したときの跳ねと音符、ボタンの縮み）。視差効果を減らす設定ではすべて止める。
+- **楽器とキャラクターの動き** は `src/styles.css` の末尾の CSS（まばたき、寝息、押したときの跳ねと音符）。視差効果を減らす設定ではすべて止める。
+- **押せる部品** は `src/styles.css` の `.pop`（下に厚みがあり、押すと沈む）にそろえる。濃い面の上では `--pop` で厚みの色を変える。
 - **microCMS** の API キーは `src/server/cms.ts` の中だけで読む。環境変数がない、または API が失敗したときもページは表示する（記事は空、バンドと年表は `defaults.ts`）。管理画面のセレクトの選択肢は日本語・正式名で、`cms.ts` で識別子に変換している。
 - **キャッシュ** は `__root.tsx` の `headers` で `s-maxage=60, stale-while-revalidate=600`。公開から1分ほどで反映されるので Webhook は使わない。
 - **i18n** は URL を変えないクライアントサイドトグル。英語欄が空なら日本語を出す（`useLocalized`）。
