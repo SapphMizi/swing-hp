@@ -35,11 +35,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: '大阪大学 軽音楽部 SWING' },
-      {
-        name: 'description',
-        content:
-          '大阪大学 軽音楽部 SWING の公式サイト。豊中キャンパスの明道館で、3つのビッグバンドがジャズを演奏しています。',
-      },
       { name: 'theme-color', content: '#fbdcc0' },
     ],
     links: [
