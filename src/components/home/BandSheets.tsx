@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router'
+import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import type { Band } from '../../lib/cms-types'
 import { BAND_BG, BAND_TEXT } from '../../lib/bands'
@@ -10,9 +12,12 @@ import { TapedPhoto } from '../ui/TapedPhoto'
 export function BandSheets({
   bands,
   headingLevel = 'h3',
+  detailed = false,
 }: {
   bands: Band[]
   headingLevel?: 'h2' | 'h3'
+  // 部について のページでは、活動の特徴とバンドの歩みへのリンクも出す
+  detailed?: boolean
 }) {
   const { t } = useTranslation()
   const l = useLocalized()
@@ -24,6 +29,8 @@ export function BandSheets({
         const slug = band.slug
         const name = band.name
         const flip = i % 2 === 1
+        const photo = band.photos?.[0]
+        const points = detailed ? l(band.points, band.points_en) : undefined
         return (
           <section
             key={band.id}
@@ -32,12 +39,12 @@ export function BandSheets({
           >
             <TornEdge className={BAND_BG[slug]} />
             <div
-              className={`mx-auto grid max-w-7xl items-center gap-8 px-4 py-14 sm:px-6 md:py-20 ${band.photo ? 'lg:grid-cols-2 lg:gap-16' : ''}`}
+              className={`mx-auto grid max-w-7xl items-center gap-8 px-4 py-14 sm:px-6 md:py-20 ${photo ? 'lg:grid-cols-2 lg:gap-16' : ''}`}
             >
               {/* 写真がないときは、バンド名と紹介文を左右に分けて面の幅を使う */}
               <div
                 className={
-                  band.photo
+                  photo
                     ? flip
                       ? 'lg:order-2'
                       : ''
@@ -52,10 +59,33 @@ export function BandSheets({
                 </Heading>
                 <div>
                   <p
-                    className={`max-w-[46ch] text-lg leading-relaxed ${band.photo ? 'mt-5' : ''}`}
+                    className={`max-w-[46ch] text-lg leading-relaxed ${photo ? 'mt-5' : ''}`}
                   >
                     {l(band.desc, band.desc_en)}
                   </p>
+                  {points && points.length > 0 && (
+                    <ul className="mt-5 max-w-[46ch] space-y-2">
+                      {points.map((p) => (
+                        <li key={p} className="flex gap-3 leading-relaxed">
+                          <span
+                            aria-hidden
+                            className="mt-[0.55em] h-2.5 w-2.5 shrink-0 rounded-full border-2 border-current"
+                          />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {detailed && band.story && (
+                    <Link
+                      to="/history"
+                      hash={`story-${slug}`}
+                      className="mt-5 inline-flex min-h-11 items-center gap-2 font-bold text-current underline decoration-2 underline-offset-4 hover:decoration-wavy"
+                    >
+                      {t('about.readStory')}
+                      <ArrowRight aria-hidden size={18} strokeWidth={2.5} />
+                    </Link>
+                  )}
                   <div className="mt-6">
                     <SnsLinks
                       instagram={band.instagram}
@@ -66,9 +96,9 @@ export function BandSheets({
                   </div>
                 </div>
               </div>
-              {band.photo && (
+              {photo && (
                 <TapedPhoto
-                  image={band.photo}
+                  image={photo}
                   alt={name}
                   sizes="(min-width: 1024px) 45vw, 92vw"
                   tilt={flip ? -2 : 2}

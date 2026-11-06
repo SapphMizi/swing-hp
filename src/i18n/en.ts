@@ -46,13 +46,43 @@ export const en = {
         'SWING is an authorized light music club at Osaka University, based in "Meidokan" on Toyonaka Campus.',
       activityTitle: 'Activities',
       activityText:
-        'We hold regular weekly practices and perform at concerts both on and off campus. Annual highlights include our regular concert and the welcome live for new students.',
+        'We play jazz at local events, school festivals, our own regular concerts and live venues.',
       placeTitle: 'Where we play',
       placeText: 'Meidokan, Toyonaka Campus, Osaka University',
+      beginners:
+        'About half of our members started their instrument after entering university. You can join without any experience.',
+      formsLabel: 'Band formats',
+      comboTitle: 'Combos',
+      comboText:
+        'Small groups of about three to five players, formed freely for each school festival or regular concert.',
+      bigbandTitle: 'Big bands',
+      bigbandText:
+        'Large bands of just under twenty players. We have the three below, each with a fixed lineup.',
+      readStory: 'Read the history of this band',
     },
 
     history: {
       label: 'History',
+      intro:
+        'This history was put together with help from many alumni. It covers more than sixty years through a timeline and the stories of each band.',
+      timelineLabel: 'Timeline of the club',
+      kinds: {
+        start: 'Formed / renamed',
+        end: 'Disbanded',
+        concert: 'Concert',
+        contest: 'Contest',
+      },
+      storiesLabel: 'Band stories',
+      storiesNote: 'Tap a band name to open the story written by alumni.',
+      awardsLabel: 'Contest results',
+      contests: {
+        yamano: 'Yamano Big Band Jazz Contest',
+        stellar: 'International Jazz Orchestra Festival',
+        other: 'Other contests',
+      },
+      times: '{{count}}×',
+      concertmaster: 'Concertmaster',
+      showAll: 'Show all results since {{from}}',
     },
 
     schedule: {

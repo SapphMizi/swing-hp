@@ -1,6 +1,7 @@
 import { queryOptions } from '@tanstack/react-query'
 import type { PostCategory } from './cms-types'
 import {
+  getAwards,
   getBands,
   getHistory,
   getLiveReportYears,
@@ -53,5 +54,12 @@ export const historyQuery = () =>
   queryOptions({
     queryKey: ['history'],
     queryFn: () => getHistory(),
+    staleTime: STALE,
+  })
+
+export const awardsQuery = () =>
+  queryOptions({
+    queryKey: ['awards'],
+    queryFn: () => getAwards(),
     staleTime: STALE,
   })

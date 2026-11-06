@@ -81,14 +81,21 @@
 | パス | 内容 | データの出どころ |
 |---|---|---|
 | `/` | ヒーロー、お知らせの新しい3件、3バンドの紹介、ライブレポートの新しい3件、入部案内 | microCMS |
-| `/about` | 部の紹介、活動場所(明道館)、年間の活動 | 翻訳ファイル |
-| `/history` | 年表 | microCMS `history` |
+| `/about` | 部の紹介、活動場所(明道館)、コンボとビッグバンドの説明、3バンドの紹介と活動の特徴 | 翻訳ファイルと microCMS `bands` |
+| `/history` | 年表、各バンドの歩み(OB・OG が書いた文章)、コンテストの記録 | microCMS `history`、`bands`、`awards`、`site` |
 | `/schedule` | Google カレンダー。今回は見た目だけ直し、API の組み込みは範囲外 | なし |
 | `/news` | お知らせの一覧 | microCMS `posts` |
 | `/news/$id` | お知らせの本文 | microCMS `posts` |
 | `/live-reports` | ライブレポートの一覧。年度で絞り込める | microCMS `posts` |
 | `/live-reports/$id` | ライブレポートの本文 | microCMS `posts` |
 | `/contact` | 各バンドの SNS、メールアドレス、依頼演奏のときの注意 | microCMS `site` と `bands` |
+
+### 歴史のページ
+
+- 上から、紹介文、写真(`site.historyImages` の最初の3枚)、年表、バンドの歩み、コンテストの記録の順に並べる
+- 年表は年ごとにまとめ、出来事の種類(結成・改名、解散、演奏会、大会)を印の色で示す。色の意味は年表の上に書く
+- バンドの歩みは OB・OG の方が書いた文章なので、文面は直さずに載せる。バンド名を押すと開く形にし、部について のページの各バンドからリンクする
+- コンテストの記録は、バンドとコンテストごとに分け、新しい年から8年分を出す。それより前の年は「すべて見る」で開く。3位までに入った回数を上に示す
 
 ### ヒーロー
 
@@ -133,12 +140,13 @@ yui540 のモーション集(https://yui540.com/motions)を参考に、押せる
 | API | 形式 | フィールド |
 |---|---|---|
 | `posts` | リスト | `category`(セレクト「お知らせ / ライブレポート」、必須)、`title`(必須)、`eventDate`(日付、必須)、`eyecatch`(画像)、`body`(リッチエディタ、必須)、`bands`(3バンドの正式名の複数選択)、`title_en`、`body_en` |
-| `site` | オブジェクト | `heroImages`(複数画像、最大5枚)、`heroCopy`、`heroCopy_en`、`email`、`instagram`、`x` |
-| `bands` | リスト | `band`(3バンドの正式名から1つ選ぶ、必須)、`desc`(必須)、`desc_en`、`photo`、`instagram`、`x`、`order`(並び順、必須) |
-| `history` | リスト | `year`、`text`、`text_en` |
+| `site` | オブジェクト | `heroImages`(複数画像、最大5枚)、`historyImages`(複数画像)、`heroCopy`、`heroCopy_en`、`email`、`instagram`、`x` |
+| `bands` | リスト | `band`(3バンドの正式名から1つ選ぶ、必須)、`desc`(必須)、`desc_en`、`points`・`points_en`(活動の特徴。1行に1つ)、`photos`(複数画像、最大5枚)、`instagram`、`x`、`story`・`story_en`(バンドの歩み。リッチエディタ)、`order`(並び順、必須) |
+| `history` | リスト | `year`、`text`、`text_en`、`kind`(セレクト「結成・改名 / 解散 / 演奏会 / 大会」) |
+| `awards` | リスト | `band`(3バンドの正式名から1つ、必須)、`contest`(セレクト「山野ビッグバンドジャズコンテスト / 国際ジャズオーケストラ・フェスティバル(ステラジャム) / その他」、必須)、`year`(必須)、`result`(必須)、`prize`、`soloists`(1行に1人)、`others`、`concertmaster` |
 
 - セレクトの選択肢は、部員が読んで分かる日本語と正式名にする。コードの側(`src/server/cms.ts`)で識別子に直す。選択肢の文言を変えるときは、コードも同時に変える
-- お知らせとライブレポートを `posts` にまとめ、API を1個空けておく。Google カレンダーの予定を microCMS で管理したくなったときなどに使う
+- Hobby プランの上限の5個を使い切る。お知らせとライブレポートは `posts` にまとめ、バンドの歩みは `bands` の欄にして、API の数を抑えた。Google カレンダーは埋め込みで載せるので、API は要らない
 - 英語のフィールドは任意。空のときは日本語を表示する
 - スキーマは `docs/microcms-schema/` に JSON で置き、管理画面からインポートできるようにする
 
@@ -148,7 +156,7 @@ yui540 のモーション集(https://yui540.com/motions)を参考に、押せる
 - 環境変数は `MICROCMS_SERVICE_DOMAIN` と `MICROCMS_API_KEY`。ローカルでは `.env.local`、本番では Vercel の環境変数に置く
 - ページは SSR で表示し、レスポンスに `Cache-Control: s-maxage=60, stale-while-revalidate=600` を付ける。記事を公開してから1分ほどでサイトに反映されるので、Webhook と再ビルドは使わない
 - 画像は microCMS の画像 API の URL に `?w=<表示幅>&fm=webp` を付けて縮小する
-- 環境変数がないときや API が失敗したときも、ページは表示する。お知らせとライブレポートは「まだありません」と空であることを示す。バンド紹介と歴史は、確認済みの内容を `src/lib/defaults.ts` に持たせ、microCMS が空のあいだはそれを表示する
+- 環境変数がないときや API が失敗したときも、ページは表示する。お知らせとライブレポートは「まだありません」と空であることを示す。バンド紹介、歴史、コンテストの記録は、部から受け取った内容を `src/lib/defaults.ts` に持たせ、microCMS が空のあいだはそれを表示する
 - 存在しない記事の URL は 404 を返す
 
 ## 8. 範囲外
@@ -172,4 +180,7 @@ yui540 のモーション集(https://yui540.com/motions)を参考に、押せる
 
 - ヒーローとライブレポートに使うライブ写真(掲載してよいもの)
 - 各バンドの Instagram と X の URL、部のメールアドレス
-- 歴史の年表に載せる内容
+- Monkey Club Jazz Orchestra の結成年。年表では1994年、阿部さんの文章では1993年になっている
+- Swing Arcade Orchestra の結成年。年表では2010年、高田さんの文章では2012年になっている
+- Monkey Club Jazz Orchestra の話を、Blue Spirits Jazz Orchestra の歩みとして載せてよいか
+- 歴史のページに載せる写真と、名前を載せる OB・OG の方の了承

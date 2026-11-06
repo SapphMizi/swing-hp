@@ -1,20 +1,52 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Plus } from 'lucide-react'
 import { Page } from '../components/layout/Page'
+import { RichText } from '../components/ui/RichText'
 import { SectionHeading } from '../components/ui/SectionHeading'
-import type { HistoryEntry } from '../lib/cms-types'
+import { TapedPhoto } from '../components/ui/TapedPhoto'
+import { BAND_BG, BAND_NAME, BAND_TEXT } from '../lib/bands'
+import type {
+  Award,
+  BandSlug,
+  ContestSlug,
+  HistoryEntry,
+  HistoryKind,
+} from '../lib/cms-types'
 import { useLocalized } from '../lib/format'
-import { historyQuery } from '../lib/queries'
+import {
+  awardsQuery,
+  bandsQuery,
+  historyQuery,
+  siteQuery,
+} from '../lib/queries'
 
 export const Route = createFileRoute('/history')({
   loader: ({ context: { queryClient } }) =>
-    queryClient.ensureQueryData(historyQuery()),
+    Promise.all([
+      queryClient.ensureQueryData(historyQuery()),
+      queryClient.ensureQueryData(bandsQuery()),
+      queryClient.ensureQueryData(awardsQuery()),
+      queryClient.ensureQueryData(siteQuery()),
+    ]),
   head: () => ({ meta: [{ title: '歴史 | 大阪大学 軽音楽部 SWING' }] }),
   component: History,
 })
 
-// 同じ年の出来事を1行にまとめる
+// 年表の印の色。種類が入っていない出来事は紙の色
+const KIND_DOT: Record<HistoryKind, string> = {
+  start: 'bg-teal',
+  end: 'bg-ink-soft',
+  concert: 'bg-yellow',
+  contest: 'bg-orange',
+}
+const KINDS = Object.keys(KIND_DOT) as HistoryKind[]
+
+// 最初に見せるコンテストの記録の件数。残りは「すべて見る」で開く
+const RECENT = 8
+
 function groupByYear(entries: HistoryEntry[]) {
   const groups = new Map<number, HistoryEntry[]>()
   for (const e of entries)
@@ -22,31 +54,267 @@ function groupByYear(entries: HistoryEntry[]) {
   return [...groups.entries()]
 }
 
+function rankOf(result: string) {
+  const m = /^(\d+)位$/.exec(result)
+  return m ? Number(m[1]) : null
+}
+
+// 順位の付箋の色。1位は黄、2位と3位は橙、ほかは紙の色。順位がない年は点線
+function rankStyle(result: string) {
+  const rank = rankOf(result)
+  if (rank === null) return 'border-dashed bg-transparent text-ink-soft'
+  if (rank === 1) return 'bg-yellow'
+  if (rank <= 3) return 'bg-orange'
+  return 'bg-paper-light'
+}
+
 function History() {
   const { t } = useTranslation()
   const l = useLocalized()
-  const { data } = useSuspenseQuery(historyQuery())
+  const { data: history } = useSuspenseQuery(historyQuery())
+  const { data: bands } = useSuspenseQuery(bandsQuery())
+  const { data: awards } = useSuspenseQuery(awardsQuery())
+  const { data: site } = useSuspenseQuery(siteQuery())
+  const photos = site.historyImages?.slice(0, 3) ?? []
+  const stories = bands.filter((b) => b.story)
+
+  // /history#story-tnwjo のように来たら、そのバンドの話を開いてから移る
+  useEffect(() => {
+    const id = window.location.hash.slice(1)
+    if (!id.startsWith('story-')) return
+    const el = document.getElementById(id)
+    if (el instanceof HTMLDetailsElement) {
+      el.open = true
+      el.scrollIntoView({ block: 'start' })
+    }
+  }, [])
 
   return (
-    <Page narrow>
-      <SectionHeading as="h1" en="History" ja={t('history.label')} />
-      <ol className="border-t-2 border-ink">
-        {groupByYear(data).map(([year, entries]) => (
-          <li
-            key={year}
-            className="grid gap-2 border-b-2 border-dashed border-ink/40 py-6 sm:grid-cols-[8rem_1fr] sm:gap-8"
-          >
-            <span className="text-3xl font-black leading-none tabular">
-              {year}
-            </span>
-            <ul className="space-y-2 text-lg leading-relaxed">
-              {entries.map((e) => (
-                <li key={e.id}>{l(e.text, e.text_en)}</li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
+    <Page>
+      <div className="max-w-4xl">
+        <SectionHeading as="h1" en="History" ja={t('history.label')} />
+        <p className="max-w-[38ch] text-xl font-bold leading-relaxed">
+          {t('history.intro')}
+        </p>
+      </div>
+
+      {photos.length > 0 && (
+        <div className="mt-14 grid gap-10 sm:grid-cols-3 sm:gap-6">
+          {photos.map((img, i) => (
+            <TapedPhoto
+              key={img.url}
+              image={img}
+              alt=""
+              sizes="(min-width: 640px) 30vw, 92vw"
+              tilt={[-2, 1.5, -1][i]}
+            />
+          ))}
+        </div>
+      )}
+
+      <section className="mt-20 max-w-4xl">
+        <SectionHeading en="Timeline" ja={t('history.timelineLabel')} />
+        <ul className="-mt-4 mb-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+          {KINDS.map((k) => (
+            <li key={k} className="flex items-center gap-2">
+              <span
+                aria-hidden
+                className={`h-3.5 w-3.5 rounded-full border-2 border-ink ${KIND_DOT[k]}`}
+              />
+              {t(`history.kinds.${k}`)}
+            </li>
+          ))}
+        </ul>
+        <ol>
+          {groupByYear(history).map(([year, entries]) => (
+            <li
+              key={year}
+              className="grid grid-cols-[4.25rem_1fr] gap-4 sm:grid-cols-[6rem_1fr] sm:gap-6"
+            >
+              <span className="pt-0.5 text-right text-2xl font-black leading-none tabular sm:text-3xl">
+                {year}
+              </span>
+              <ul className="space-y-3 border-l-[3px] border-ink pb-7 pl-5">
+                {entries.map((e) => (
+                  <li key={e.id} className="relative leading-relaxed">
+                    <span
+                      aria-hidden
+                      className={`absolute -left-[1.95rem] top-[0.3em] h-4 w-4 rounded-full border-2 border-ink ${e.kind ? KIND_DOT[e.kind] : 'bg-paper'}`}
+                    />
+                    {e.kind && (
+                      <span className="sr-only">
+                        {t(`history.kinds.${e.kind}`)}:{' '}
+                      </span>
+                    )}
+                    {l(e.text, e.text_en)}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {stories.length > 0 && (
+        <section className="mt-16 max-w-4xl">
+          <SectionHeading en="Band Stories" ja={t('history.storiesLabel')} />
+          <p className="-mt-4 mb-8 font-bold">{t('history.storiesNote')}</p>
+          <div className="space-y-5">
+            {stories.map((band) => (
+              <details
+                key={band.id}
+                id={`story-${band.slug}`}
+                className="group scroll-mt-28 rounded-[1.75rem] border-2 border-ink bg-paper-light shadow-[0_4px_0_0_var(--color-ink)]"
+              >
+                <summary
+                  className={`flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 rounded-[1.6rem] px-5 py-3 text-xl font-black leading-tight group-open:rounded-b-none md:text-2xl [&::-webkit-details-marker]:hidden ${BAND_BG[band.slug]} ${BAND_TEXT[band.slug]}`}
+                >
+                  {band.name}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-paper-light text-ink transition-transform duration-300 ease-[var(--ease-spring)] group-open:rotate-45">
+                    <Plus aria-hidden size={20} strokeWidth={3} />
+                  </span>
+                </summary>
+                <div className="story px-5 pb-8 pt-6 md:px-8">
+                  <RichText html={l(band.story ?? '', band.story_en)} />
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {awards.length > 0 && (
+        <section className="mt-20">
+          <SectionHeading en="Contests" ja={t('history.awardsLabel')} />
+          <div className="space-y-16">
+            {groupAwards(awards).map(({ band, contest, list }) => (
+              <AwardTable
+                key={`${band}-${contest}`}
+                band={band}
+                contest={contest}
+                list={list}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </Page>
+  )
+}
+
+function groupAwards(awards: Award[]) {
+  const groups = new Map<
+    string,
+    { band: BandSlug; contest: ContestSlug; list: Award[] }
+  >()
+  for (const a of awards) {
+    const key = `${a.band}-${a.contest}`
+    const g = groups.get(key) ?? { band: a.band, contest: a.contest, list: [] }
+    g.list.push(a)
+    groups.set(key, g)
+  }
+  // 新しい年を上にする
+  return [...groups.values()].map((g) => ({
+    ...g,
+    list: [...g.list].sort((a, b) => b.year - a.year),
+  }))
+}
+
+function AwardTable({
+  band,
+  contest,
+  list,
+}: {
+  band: BandSlug
+  contest: ContestSlug
+  list: Award[]
+}) {
+  const { t } = useTranslation()
+  const recent = list.slice(0, RECENT)
+  const older = list.slice(RECENT)
+  // 3位までに入った回数
+  const podium = [1, 2, 3]
+    .map((rank) => ({
+      rank,
+      count: list.filter((a) => rankOf(a.result) === rank).length,
+    }))
+    .filter((p) => p.count > 0)
+
+  return (
+    <div>
+      <h3 className="text-xl font-black leading-snug [text-wrap:balance] md:text-3xl">
+        {t(`history.contests.${contest}`)}
+      </h3>
+      <p className="mt-2 flex items-center gap-2 font-bold">
+        <span
+          aria-hidden
+          className={`h-3.5 w-3.5 rounded-full border-2 border-ink ${BAND_BG[band]}`}
+        />
+        {BAND_NAME[band]}
+      </p>
+      {podium.length > 0 && (
+        <ul className="mt-5 flex flex-wrap gap-3">
+          {podium.map(({ rank, count }) => (
+            <li
+              key={rank}
+              className={`flex items-baseline gap-2 rounded-full border-2 border-ink px-4 py-1.5 font-black ${rankStyle(`${rank}位`)}`}
+            >
+              <span className="text-lg tabular">{rank}位</span>
+              <span className="text-sm">{t('history.times', { count })}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <AwardRows list={recent} />
+      {older.length > 0 && (
+        <details className="group mt-2">
+          <summary className="pop inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-full bg-paper-light px-5 font-bold [&::-webkit-details-marker]:hidden">
+            <Plus
+              aria-hidden
+              size={18}
+              strokeWidth={3}
+              className="transition-transform duration-300 ease-[var(--ease-spring)] group-open:rotate-45"
+            />
+            {t('history.showAll', { from: older[older.length - 1].year })}
+          </summary>
+          <AwardRows list={older} />
+        </details>
+      )}
+    </div>
+  )
+}
+
+function AwardRows({ list }: { list: Award[] }) {
+  const { t } = useTranslation()
+  return (
+    <ol className="mt-6 divide-y-2 divide-dashed divide-ink/30 border-y-2 border-ink">
+      {list.map((a) => (
+        <li
+          key={a.id}
+          className="grid grid-cols-[3.5rem_1fr] gap-x-4 gap-y-1 py-4 sm:grid-cols-[4.5rem_7.5rem_1fr_14rem] sm:items-baseline"
+        >
+          <span className="text-xl font-black tabular">{a.year}</span>
+          <span className="sm:order-none">
+            <span
+              className={`inline-block rounded-full border-2 border-ink px-3 py-0.5 text-sm font-black tabular ${rankStyle(a.result)}`}
+            >
+              {a.result}
+            </span>
+          </span>
+          <div className="col-start-2 text-sm leading-relaxed sm:col-start-auto">
+            {a.prize && <p className="font-bold">{a.prize}</p>}
+            {[...(a.soloists ?? []), ...(a.others ?? [])].map((s) => (
+              <p key={s}>{s}</p>
+            ))}
+          </div>
+          {a.concertmaster && (
+            <p className="col-start-2 text-sm text-ink-soft sm:col-start-auto">
+              <span className="font-bold">{t('history.concertmaster')}</span>{' '}
+              {a.concertmaster}
+            </p>
+          )}
+        </li>
+      ))}
+    </ol>
   )
 }

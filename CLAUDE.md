@@ -23,7 +23,7 @@ git checkout -b ブランチ名   # 作業開始前に必ず実行
 - **TanStack Start** — SSR React フレームワーク（Vite ベース）
 - **TanStack Router** — `src/routes/` によるファイルベースルーティング
 - **TanStack Query** — microCMS のデータをルートの loader で `ensureQueryData` し、コンポーネントで `useSuspenseQuery` する
-- **microCMS** — 記事・トップ写真・バンド紹介・歴史の管理（`microcms-js-sdk`、無料の Hobby プラン）
+- **microCMS** — 記事・トップ写真・バンド紹介・歴史・コンテストの記録の管理（`microcms-js-sdk`、無料の Hobby プラン。API は上限の5つ: posts、site、bands、history、awards）
 - **Tailwind CSS v4** — `src/styles.css` の `@theme` カスタムプロパティでスタイリング
 - **GSAP** — ローディング画面のタイムラインだけに使う
 - **i18next + react-i18next** — 日本語/英語切り替え（URL 変更なし、ヘッダーのトグルボタン）
@@ -48,7 +48,8 @@ src/
 ├── routes/
 │   ├── __root.tsx            # HTML シェル、フォント、初回判定スクリプト、Cache-Control、404
 │   ├── index.tsx             # トップ（ヒーロー、お知らせ、バンド、ライブレポート、入部案内）
-│   ├── about.tsx / history.tsx / schedule.tsx / contact.tsx
+│   ├── history.tsx           # 年表、バンドの歩み（#story-<slug> で開く）、コンテストの記録
+│   ├── about.tsx / schedule.tsx / contact.tsx
 │   ├── news.index.tsx / news.$id.tsx
 │   └── live-reports.index.tsx / live-reports.$id.tsx   # ?year= で年を絞り込む
 ├── components/
@@ -64,7 +65,7 @@ src/
 │   ├── cms-types.ts          # 画面で使う型
 │   ├── queries.ts            # queryOptions
 │   ├── bands.ts              # バンドの正式名とテーマカラー
-│   ├── defaults.ts           # microCMS が空のときのバンド紹介と年表
+│   ├── defaults.ts           # microCMS が空のときのバンド紹介、バンドの歩み、年表、コンテストの記録
 │   └── format.ts             # 英語欄のフォールバック、画像 URL、日付
 ├── i18n/                     # ja.ts / en.ts（固定の文言だけ。記事は microCMS）
 └── styles.css                # @theme の色とフォント
@@ -95,7 +96,7 @@ docs/microcms-schema/         # microCMS にインポートするスキーマ
 - **スクロール時の演出** は見出しのマーカー線だけ（`SectionHeading`、IntersectionObserver で1回だけ）。ScrollTrigger は使わない。
 - **キャラクターの動き** は `src/styles.css` の末尾の CSS（寝息、押したときの跳ねと音符）。視差効果を減らす設定ではすべて止める。
 - **押せる部品** は `src/styles.css` の `.pop`（下に厚みがあり、押すと沈む）にそろえる。濃い面の上では `--pop` で厚みの色を変える。
-- **microCMS** の API キーは `src/server/cms.ts` の中だけで読む。環境変数がない、または API が失敗したときもページは表示する（記事は空、バンドと年表は `defaults.ts`）。管理画面のセレクトの選択肢は日本語・正式名で、`cms.ts` で識別子に変換している。
+- **microCMS** の API キーは `src/server/cms.ts` の中だけで読む。環境変数がない、または API が失敗したときもページは表示する（記事は空、バンド紹介・年表・コンテストの記録は `defaults.ts`）。管理画面のセレクトの選択肢は日本語・正式名で、`cms.ts` で識別子に変換している。「1行に1つ」の欄（活動の特徴、ソリスト賞）は `cms.ts` で配列にする。
 - **キャッシュ** は `__root.tsx` の `headers` で `s-maxage=60, stale-while-revalidate=600`。公開から1分ほどで反映されるので Webhook は使わない。
 - **i18n** は URL を変えないクライアントサイドトグル。英語欄が空なら日本語を出す（`useLocalized`）。
 - **手描きの部品** は 400px のアイコンから切り出したもの。高解像度の元データはない。CSS で手描き風の線を作らない。

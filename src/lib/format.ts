@@ -5,7 +5,8 @@ import type { CmsImage } from './cms-types'
 export function useLocalized() {
   const { i18n } = useTranslation()
   const isEn = i18n.language === 'en'
-  return (ja: string, en?: string) => (isEn && en ? en : ja)
+  // 文字列のほか、活動の特徴のような配列にも使う
+  return <T>(ja: T, en?: T) => (isEn && en ? en : ja)
 }
 
 // microCMS の画像 API で表示幅に合わせて縮小する

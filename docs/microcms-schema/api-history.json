@@ -22,6 +22,21 @@
       "kind": "text",
       "required": false,
       "isUnique": false
+    },
+    {
+      "idValue": "6c2f0e8b14",
+      "fieldId": "kind",
+      "name": "種類（年表の印の色が変わる。任意）",
+      "kind": "select",
+      "required": false,
+      "selectItems": [
+        { "id": "a1c3e5f7", "value": "結成・改名" },
+        { "id": "b2d4f6a8", "value": "解散" },
+        { "id": "c3e5a7b9", "value": "演奏会" },
+        { "id": "d4f6b8c0", "value": "大会" }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
     }
   ],
   "customFields": []

@@ -30,6 +30,8 @@ export interface PostList {
 
 export interface SiteSettings {
   heroImages?: CmsImage[]
+  // 歴史のページの上に貼る写真
+  historyImages?: CmsImage[]
   heroCopy?: string
   heroCopy_en?: string
   email?: string
@@ -43,14 +45,41 @@ export interface Band {
   name: string
   desc: string
   desc_en?: string
-  photo?: CmsImage
+  // 活動の特徴。1行に1つ
+  points?: string[]
+  points_en?: string[]
+  // 1枚目をバンド紹介に使う
+  photos?: CmsImage[]
   instagram?: string
   x?: string
+  // 歴史のページに載せる、バンドの歩み(リッチエディタの HTML)
+  story?: string
+  story_en?: string
 }
+
+export type HistoryKind = 'start' | 'end' | 'concert' | 'contest'
 
 export interface HistoryEntry {
   id: string
   year: number
   text: string
   text_en?: string
+  kind?: HistoryKind
+}
+
+export type ContestSlug = 'yamano' | 'stellar' | 'other'
+
+// コンテストの記録。1年1コンテストで1件
+export interface Award {
+  id: string
+  band: BandSlug
+  contest: ContestSlug
+  year: number
+  // 「4位」「出場せず」「コンサート形式」など
+  result: string
+  prize?: string
+  // 1行に1人
+  soloists?: string[]
+  others?: string[]
+  concertmaster?: string
 }

@@ -1,17 +1,20 @@
 import { createServerFn } from '@tanstack/react-start'
 import { createClient } from 'microcms-js-sdk'
 import type {
+  Award,
   Band,
   BandSlug,
   CmsImage,
+  ContestSlug,
   HistoryEntry,
+  HistoryKind,
   Post,
   PostCategory,
   PostList,
   SiteSettings,
 } from '../lib/cms-types'
 import { BAND_NAME } from '../lib/bands'
-import { DEFAULT_BANDS, DEFAULT_HISTORY } from '../lib/defaults'
+import { DEFAULT_AWARDS, DEFAULT_BANDS, DEFAULT_HISTORY } from '../lib/defaults'
 
 // 管理画面のセレクトフィールドの選択肢。部員が読んで分かる言葉にしてあるので、ここで識別子に直す。
 // 選択肢の文言を管理画面で変えたら、ここも合わせて変える。
@@ -30,6 +33,38 @@ function categoryFromLabel(labels?: string[]): PostCategory | undefined {
 function bandFromName(name: string): BandSlug | undefined {
   const entry = Object.entries(BAND_NAME).find(([, n]) => n === name)
   return entry?.[0] as BandSlug | undefined
+}
+
+const HISTORY_KIND_LABEL: Record<HistoryKind, string> = {
+  start: '結成・改名',
+  end: '解散',
+  concert: '演奏会',
+  contest: '大会',
+}
+
+const CONTEST_LABEL: Record<ContestSlug, string> = {
+  yamano: '山野ビッグバンドジャズコンテスト',
+  stellar: '国際ジャズオーケストラ・フェスティバル（ステラジャム）',
+  other: 'その他',
+}
+
+function slugFromLabel<T extends string>(
+  table: Record<T, string>,
+  labels?: string[],
+): T | undefined {
+  const entry = Object.entries(table).find(([, label]) =>
+    labels?.includes(label as string),
+  )
+  return entry?.[0] as T | undefined
+}
+
+// 「1行に1つ」の欄を配列にする
+function lines(text?: string): string[] | undefined {
+  const list = text
+    ?.split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean)
+  return list && list.length > 0 ? list : undefined
 }
 
 // microCMS から届く生の形
@@ -51,9 +86,33 @@ interface RawBand {
   band: string[]
   desc: string
   desc_en?: string
-  photo?: CmsImage
+  points?: string
+  points_en?: string
+  photos?: CmsImage[]
   instagram?: string
   x?: string
+  story?: string
+  story_en?: string
+}
+
+interface RawHistory {
+  id: string
+  year: number
+  text: string
+  text_en?: string
+  kind?: string[]
+}
+
+interface RawAward {
+  id: string
+  band: string[]
+  contest: string[]
+  year: number
+  result: string
+  prize?: string
+  soloists?: string
+  others?: string
+  concertmaster?: string
 }
 
 function toPost(raw: RawPost): Post {
@@ -184,8 +243,16 @@ export const getBands = createServerFn({ method: 'GET' }).handler(
       const bands = res.contents.flatMap((raw): Band[] => {
         const slug = bandFromName(raw.band[0] ?? '')
         if (!slug) return []
-        const { band: _band, ...rest } = raw
-        return [{ ...rest, slug, name: BAND_NAME[slug] }]
+        const { band: _band, points, points_en, ...rest } = raw
+        return [
+          {
+            ...rest,
+            slug,
+            name: BAND_NAME[slug],
+            points: lines(points),
+            points_en: lines(points_en),
+          },
+        ]
       })
       return bands.length > 0 ? bands : DEFAULT_BANDS
     })
@@ -197,11 +264,47 @@ export const getHistory = createServerFn({ method: 'GET' }).handler(
     const client = getClient()
     if (!client) return DEFAULT_HISTORY
     return safely('history', DEFAULT_HISTORY, async () => {
-      const res = await client.getAllContents<HistoryEntry>({
+      const res = await client.getAllContents<RawHistory>({
         endpoint: 'history',
         queries: { orders: 'year' },
       })
-      return res.length > 0 ? res : DEFAULT_HISTORY
+      if (res.length === 0) return DEFAULT_HISTORY
+      return res.map((raw) => ({
+        ...raw,
+        kind: slugFromLabel(HISTORY_KIND_LABEL, raw.kind),
+      }))
+    })
+  },
+)
+
+export const getAwards = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<Award[]> => {
+    const client = getClient()
+    if (!client) return DEFAULT_AWARDS
+    return safely('awards', DEFAULT_AWARDS, async () => {
+      const res = await client.getAllContents<RawAward>({
+        endpoint: 'awards',
+        queries: { orders: 'year' },
+      })
+      const awards = res.flatMap((raw): Award[] => {
+        const band = bandFromName(raw.band[0] ?? '')
+        const contest = slugFromLabel(CONTEST_LABEL, raw.contest)
+        if (!band || !contest) return []
+        return [
+          {
+            id: raw.id,
+            band,
+            contest,
+            year: raw.year,
+            result: raw.result,
+            prize: raw.prize,
+            soloists: lines(raw.soloists),
+            others: lines(raw.others),
+            concertmaster: raw.concertmaster,
+          },
+        ]
+      })
+      return awards.length > 0 ? awards : DEFAULT_AWARDS
     })
   },
 )

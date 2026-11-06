@@ -46,13 +46,43 @@ export const ja = {
         '大阪大学軽音楽部SWINGは大阪大学公認の軽音楽部で、豊中キャンパス内の「明道館」を拠点に活動しています。',
       activityTitle: '活動内容',
       activityText:
-        '毎週定期的に練習を行い、学内外でのライブ演奏に向けて技術を磨いています。定期演奏会・新歓ライブなど年間を通じて多彩な演奏機会があります。',
+        'ジャズを演奏しています。地域の行事や学祭、部の定期演奏会、ライブハウスなどで演奏します。',
       placeTitle: '活動場所',
       placeText: '大阪大学 豊中キャンパス 明道館',
+      beginners:
+        '部員の約半数は、大学に入ってから楽器を始めています。楽器を触ったことがなくても入部できます。',
+      formsLabel: 'バンドの形',
+      comboTitle: 'コンボ',
+      comboText:
+        '3〜5人ほどの少人数のバンドです。学祭や定期演奏会のたびに、自由にメンバーを集めて組みます。',
+      bigbandTitle: 'ビッグバンド',
+      bigbandText:
+        '20人弱の大人数のバンドです。下の3つがあり、それぞれメンバーが決まっています。',
+      readStory: 'このバンドの歩みを読む',
     },
 
     history: {
       label: 'SWINGの歴史',
+      intro:
+        'SWING の歴史は、多くの OB・OG の方に協力していただいてまとめました。60年以上の歩みを、年表と各バンドの話で紹介します。',
+      timelineLabel: '大阪大学 軽音楽部のあゆみ',
+      kinds: {
+        start: '結成・改名',
+        end: '解散',
+        concert: '演奏会',
+        contest: '大会',
+      },
+      storiesLabel: 'バンドの歩み',
+      storiesNote: 'バンド名を押すと、OB・OG の方が書いた話が開きます。',
+      awardsLabel: 'コンテストの記録',
+      contests: {
+        yamano: '山野ビッグバンドジャズコンテスト',
+        stellar: '国際ジャズオーケストラ・フェスティバル',
+        other: 'そのほかのコンテスト',
+      },
+      times: '{{count}}回',
+      concertmaster: 'コンサートマスター',
+      showAll: '{{from}}年からの記録をすべて見る',
     },
 
     schedule: {

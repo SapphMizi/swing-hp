@@ -24,6 +24,9 @@ function About() {
           <p className="max-w-[36ch] text-xl font-bold leading-relaxed">
             {t('about.intro')}
           </p>
+          <p className="mt-4 max-w-[40ch] text-lg leading-relaxed">
+            {t('about.beginners')}
+          </p>
           <dl className="mt-10 grid gap-8 sm:grid-cols-2">
             <div>
               <dt className="text-lg font-black">{t('about.activityTitle')}</dt>
@@ -45,10 +48,32 @@ function About() {
           className="mx-auto h-auto w-full max-w-[460px]"
         />
       </div>
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+        <SectionHeading en="Combo & Big Band" ja={t('about.formsLabel')} />
+        <div className="grid gap-6 md:grid-cols-2">
+          {(
+            [
+              ['comboTitle', 'comboText', 'bg-teal'],
+              ['bigbandTitle', 'bigbandText', 'bg-orange'],
+            ] as const
+          ).map(([title, text, bg], i) => (
+            <div
+              key={title}
+              className={`rounded-[1.75rem] border-2 border-ink p-6 shadow-[0_4px_0_0_var(--color-ink)] md:p-8 ${bg}`}
+              style={{ rotate: i === 0 ? '-1deg' : '1deg' }}
+            >
+              <h3 className="text-2xl font-black">{t(`about.${title}`)}</h3>
+              <p className="mt-3 text-lg leading-relaxed">
+                {t(`about.${text}`)}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading en="Our Bands" ja={t('home.bandsLabel')} />
       </div>
-      <BandSheets bands={bands} headingLevel="h3" />
+      <BandSheets bands={bands} headingLevel="h3" detailed />
       <div className="h-20" />
     </main>
   )
